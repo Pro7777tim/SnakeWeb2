@@ -1,6 +1,8 @@
 import { loadJson } from "../json/loadJson.mjs";
 import { Button, Window } from './UI.mjs';
 import { randLevel } from "./levels.mjs";
+import { isEvent } from "./event/events.mjs";
+import { SnowEmitter } from "./event/snowfall.mjs";
 export class menu extends Phaser.Scene {
     constructor() {
         super({ key: 'menu' });
@@ -8,6 +10,8 @@ export class menu extends Phaser.Scene {
 
     preload() {
         this.load.image('snakeIcon', 'src/img/icon.png');
+        this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
+        this.load.image('snowflakes', 'src/img/snowflakes.png');
         this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
 
@@ -18,7 +22,7 @@ export class menu extends Phaser.Scene {
         const icon = this.add.image(
             this.cameras.main.width / 2,
             this.cameras.main.height / 6,
-            'snakeIcon'
+            isEvent.icon
         ).setOrigin(0.5, 0.5).setScale(4);
         icon.alpha = 0;
         this.tweens.add({
@@ -27,6 +31,9 @@ export class menu extends Phaser.Scene {
             duration: 1000,
             ease: 'Linear'
         });
+        //----EVENTS----
+        //SNOWFALL
+        const snowfall = new SnowEmitter(this);
         //HEAD TEXT
         const headText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 3, 'Snake Web 2', {
             fontFamily: 'Pixelify Sans',
