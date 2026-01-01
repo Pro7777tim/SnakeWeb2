@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SnakeWeb2</title>
+  <link rel="icon" href="favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+  <style>
+    html, body {
+      overflow: hidden;
+      margin: 0px;
+      background-color: #111111;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <script type="module" src="src/global/levels.mjs"></script>
+  <script type="module" src="src/json/loadJson.mjs"></script>
+  <script type="module" src="src/global/UI.mjs"></script>
+  <script type="module" src="src/global/backgSc.mjs"></script>
+  <script type="module" src="src/global/API/endLevel.mjs"></script>
+  <script type="module" src="src/global/menu.mjs"></script>
+  <script type="module" src="src/levels/classic/main.mjs"></script>
+  <script type="module" src="src/global/main.mjs"></script>
+</body>
+</html>
