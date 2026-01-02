@@ -4,17 +4,25 @@ import { randLevel } from "./levels.mjs";
 import { isEvent } from "./event/events.mjs";
 import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
+import { Skullfall } from "./event/skullfall.mjs";
+
 export class menu extends Phaser.Scene {
     constructor() {
         super({ key: 'menu' });
     }
 
     preload() {
+        //IMAGE
         this.load.image('snakeIcon', 'src/img/icon.png');
         this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
         this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
+        this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
         this.load.image('snowflakes', 'src/img/snowflakes.png');
         this.load.image('flowers', 'src/img/flowers.png');
+        this.load.image('skull', 'src/img/skull.png');
+        //SONG
+        this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
+        //FONTS
         this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
 
@@ -26,7 +34,8 @@ export class menu extends Phaser.Scene {
             this.cameras.main.width / 2,
             this.cameras.main.height / 6,
             isEvent.icon
-        ).setOrigin(0.5, 0.5).setScale(4);
+        ).setOrigin(0.5, 0.5)
+        .setScale(4);
         icon.alpha = 0;
         this.tweens.add({
             targets: icon,
@@ -43,6 +52,24 @@ export class menu extends Phaser.Scene {
         if (isEvent.event == "easter") {
             const easterEmitter = new EasterEmitter(this);
         }
+        //HALLOWEEN
+        if (isEvent.event == "halloween") {
+            this.lights.enable();
+            this.lights.addLight(this.cameras.main.width / 2, this.cameras.main.height / 2, 800, 0xFFFACD, 3);
+            this.lights.addLight(this.cameras.main.width / 2.25, this.cameras.main.height / 8, 100, 0xFFFACD, 2);
+            const skullfall = new Skullfall(this);
+        }
+        //----BG SONG----
+        if (!isEvent.bgSong) {
+            //in future
+        } else {
+            const bgMusic = this.sound.add(isEvent.bgSong, {
+                loop: true,
+                volume: 0.05
+            });
+            bgMusic.play();
+        }
+        //----CREATING OBJECTS----
         //HEAD TEXT
         const headText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 3, 'Snake Web 2', {
             fontFamily: 'Pixelify Sans',
@@ -301,6 +328,17 @@ export class menu extends Phaser.Scene {
                 ease: 'Linear'
             });
         }, [], this);
+        //HALLOWEEN LIGHTS
+        if (isEvent.event == "halloween") {
+            icon.setPipeline('Light2D');
+            headText.setPipeline('Light2D');
+            splashText.setPipeline('Light2D');
+            levelText.setPipeline('Light2D');
+            snapshotText.setPipeline('Light2D');
+            playButton.iterate(function(child) {
+                child.setPipeline('Light2D');
+            });
+        }
     }
     update() {}
 }
