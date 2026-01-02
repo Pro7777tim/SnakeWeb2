@@ -3,6 +3,7 @@ import { Button, Window } from './UI.mjs';
 import { randLevel } from "./levels.mjs";
 import { isEvent } from "./event/events.mjs";
 import { SnowEmitter } from "./event/snowfall.mjs";
+import { EasterEmitter } from "./event/easterEmitter.mjs";
 export class menu extends Phaser.Scene {
     constructor() {
         super({ key: 'menu' });
@@ -11,7 +12,9 @@ export class menu extends Phaser.Scene {
     preload() {
         this.load.image('snakeIcon', 'src/img/icon.png');
         this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
+        this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
         this.load.image('snowflakes', 'src/img/snowflakes.png');
+        this.load.image('flowers', 'src/img/flowers.png');
         this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
 
@@ -33,7 +36,13 @@ export class menu extends Phaser.Scene {
         });
         //----EVENTS----
         //SNOWFALL
-        const snowfall = new SnowEmitter(this);
+        if (isEvent.event == "newYear") {
+            const snowfall = new SnowEmitter(this);
+        }
+        //EASTER
+        if (isEvent.event == "easter") {
+            const easterEmitter = new EasterEmitter(this);
+        }
         //HEAD TEXT
         const headText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 3, 'Snake Web 2', {
             fontFamily: 'Pixelify Sans',

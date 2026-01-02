@@ -1,16 +1,49 @@
-//FUNCTIONS
+//----FUNCTIONS----
+//CHRISTMAS
 function isChristmasPeriod(date = new Date()) {
     const md = (date.getMonth() + 1) * 100 + date.getDate();
     return (md >= 1220 || md <= 110);
 }
-//EVENT
-const nowIsChristmasPeriod = isChristmasPeriod();
+//EASTER
+function easterDate(year) {
+    const a = year % 19;
+    const b = Math.floor(year / 100);
+    const c = year % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+    const day = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(year, month, day, 12);
+}
+function isEaster(date = new Date()) {
+    const easter = easterDate(date.getFullYear());
+    return (
+        date.getDate() === easter.getDate() &&
+        date.getMonth() === easter.getMonth()
+    );
+}
+//----EVENT----
+//VARIABLES
+window.date = new Date(/*2026, 3, 5*/);
+const nowIsChristmasPeriod = isChristmasPeriod(window.date);
+const nowIsEaster = isEaster(window.date);
+//DATA
 const isEvent = {
     icon: "snakeIcon",
     event: false
 };
 if (nowIsChristmasPeriod) {
-    isEvent.icon = "snakeIconChristmas";
     isEvent.event = "newYear";
+    isEvent.icon = "snakeIconChristmas";
+} else if (nowIsEaster) {
+    isEvent.event = "easter";
+    isEvent.icon = "snakeIconEaster";
 }
 export { isEvent };
