@@ -33,6 +33,10 @@ export class menu extends Phaser.Scene {
     async create() {
         //GET DATA
         const gameJson = await loadJson("src/json/game.json");
+        //SNAPSHOOT TEXT
+        if (isEvent.snapshotText) {
+            gameJson.snapshotText = isEvent.snapshotText;
+        }
         //ICON
         const icon = this.add.image(
             this.cameras.main.width / 2,
@@ -331,14 +335,31 @@ export class menu extends Phaser.Scene {
                 ease: 'Linear'
             });
         }, [], this);
+        //SNAPSHOOT SHOW TEXT
+        const snapshotShowText = this.add.text(this.cameras.main.width, this.cameras.main.height, 'Snapshot: ' + gameJson.snapshot, {
+            fontFamily: 'Pixelify Sans',
+            fontSize: '36px',
+            color: '#b4e051',
+            stroke: '#000',
+            strokeThickness: 4
+        }).setOrigin(1, 1);
+        snapshotShowText.alpha = 0;
+        this.time.delayedCall(3000, () => {
+            this.tweens.add({
+                targets: snapshotShowText,
+                alpha: 1,
+                duration: 1000,
+                ease: 'Linear'
+            });
+        }, [], this);
         //SNAPSHOOT TEXT
-        const snapshotText = this.add.text(this.cameras.main.width, this.cameras.main.height, 'Snapshot: ' + gameJson.snapshot, {
+        const snapshotText = this.add.text(0, this.cameras.main.height, gameJson.snapshotText, {
             fontFamily: 'Pixelify Sans',
             fontSize: '36px',
             color: '#ffe561',
             stroke: '#000',
             strokeThickness: 4
-        }).setOrigin(1, 1);
+        }).setOrigin(0, 1);
         snapshotText.alpha = 0;
         this.time.delayedCall(2500, () => {
             this.tweens.add({
@@ -355,6 +376,7 @@ export class menu extends Phaser.Scene {
             splashText.setPipeline('Light2D');
             levelText.setPipeline('Light2D');
             snapshotText.setPipeline('Light2D');
+            snapshotShowText.setPipeline('Light2D');
             playButton.iterate(function(child) {
                 child.setPipeline('Light2D');
             });
