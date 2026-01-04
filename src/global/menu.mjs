@@ -64,7 +64,7 @@ export class menu extends Phaser.Scene {
             const skullfall = new Skullfall(this);
         }
         //BIRTHDAY
-        if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday") {
+        if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday") {
             const confetti = new BirthdayEmitter(this);
             this.input.on('pointerdown', pointer => {
                 confetti.shoot(pointer.worldX, pointer.worldY, 50);
