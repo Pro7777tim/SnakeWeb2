@@ -33,12 +33,17 @@ function isEaster(date = new Date()) {
 function isHalloweenWeek(date = new Date()) {
     return date.getMonth() === 9 && date.getDate() >= 25 && date.getDate() <= 31;
 }
+//KPNCA BIRTHDAY
+function isDecember8(date = new Date()) {
+    return date.getMonth() === 11 && date.getDate() === 8;
+}
 //----EVENT----
 //VARIABLES
-window.date = new Date(/*new Date(2025, 9, 25)*/);
+window.date = new Date();
 const nowIsChristmasPeriod = isChristmasPeriod(window.date);
 const nowIsEaster = isEaster(window.date);
 const nowIsHalloweenWeek = isHalloweenWeek(window.date);
+const nowIsKpncaBirthday = isDecember8(window.date);
 //DATA
 const isEvent = {
     icon: "snakeIcon",
@@ -55,5 +60,9 @@ if (nowIsChristmasPeriod) {
     isEvent.event = "halloween";
     isEvent.icon = "snakeIconHalloween";
     isEvent.bgSong = "bgHalloweenSong";
+} else if (nowIsKpncaBirthday) {
+    isEvent.event = "kpncaBirthday";
+    isEvent.icon = "snakeIconBirthdayKpnca";
+    isEvent.bgSong = "bgBirthdaySong";
 }
 export { isEvent };

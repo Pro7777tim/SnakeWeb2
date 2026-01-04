@@ -5,6 +5,7 @@ import { isEvent } from "./event/events.mjs";
 import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
 import { Skullfall } from "./event/skullfall.mjs";
+import { BirthdayEmitter } from './event/birthdayEmitter.mjs';
 
 export class menu extends Phaser.Scene {
     constructor() {
@@ -17,11 +18,13 @@ export class menu extends Phaser.Scene {
         this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
         this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
         this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
+        this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
         this.load.image('snowflakes', 'src/img/snowflakes.png');
         this.load.image('flowers', 'src/img/flowers.png');
         this.load.image('skull', 'src/img/skull.png');
         //SONG
         this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
+        this.load.audio("bgBirthdaySong", "src/song/bg_birthday.mp3");
         //FONTS
         this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
@@ -58,6 +61,22 @@ export class menu extends Phaser.Scene {
             this.lights.addLight(this.cameras.main.width / 2, this.cameras.main.height / 2, 800, 0xFFFACD, 3);
             this.lights.addLight(this.cameras.main.width / 2.25, this.cameras.main.height / 8, 100, 0xFFFACD, 2);
             const skullfall = new Skullfall(this);
+        }
+        //KPNCA BIRTHDAY
+        if (isEvent.event == "kpncaBirthday") {
+            const confetti = new BirthdayEmitter(this);
+            this.input.on('pointerdown', pointer => {
+                confetti.shoot(pointer.worldX, pointer.worldY, 50);
+            });
+            const autoShoot = this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    const p = this.input.activePointer;
+                    confetti.shoot(p.worldX, p.worldY, 50);
+                },
+                callbackScope: this,
+                loop: true
+            });
         }
         //----BG SONG----
         if (!isEvent.bgSong) {
