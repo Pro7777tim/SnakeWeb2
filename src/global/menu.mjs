@@ -19,6 +19,7 @@ export class menu extends Phaser.Scene {
         this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
         this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
         this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
+        this.load.image('snakeIconBirthday', 'src/img/iconBirthday.png');
         this.load.image('snowflakes', 'src/img/snowflakes.png');
         this.load.image('flowers', 'src/img/flowers.png');
         this.load.image('skull', 'src/img/skull.png');
@@ -62,8 +63,8 @@ export class menu extends Phaser.Scene {
             this.lights.addLight(this.cameras.main.width / 2.25, this.cameras.main.height / 8, 100, 0xFFFACD, 2);
             const skullfall = new Skullfall(this);
         }
-        //KPNCA BIRTHDAY
-        if (isEvent.event == "kpncaBirthday") {
+        //BIRTHDAY
+        if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday") {
             const confetti = new BirthdayEmitter(this);
             this.input.on('pointerdown', pointer => {
                 confetti.shoot(pointer.worldX, pointer.worldY, 50);
