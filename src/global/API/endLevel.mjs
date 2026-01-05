@@ -182,6 +182,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
                 ease: 'Linear'
             });
         }, [], scene);
+        this.setDepth(12);
         scene.add.existing(this);
     }
 }
@@ -336,6 +337,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
                 ease: 'Linear'
             });
         }, [], scene);
+        this.setDepth(12);
         scene.add.existing(this);
     }
 }

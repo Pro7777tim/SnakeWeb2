@@ -1,4 +1,5 @@
 import { DefeatWindow, WinWindow } from "../../global/API/endLevel.mjs"
+import { ClassicControl } from "../../global/API/mobileControl.mjs";
 export class classic extends Phaser.Scene {
     constructor() {
       super({ key: 'level' });
@@ -39,16 +40,22 @@ export class classic extends Phaser.Scene {
       });
 
       this.input.keyboard.on('keydown', this.handleKey, this);
+      this.control = new ClassicControl(this, 660, 740, {
+        up: () => {this.handleKey({key: "arrowup"})},
+        down: () => {this.handleKey({key: "arrowdown"})},
+        left: () => {this.handleKey({key: "arrowleft"})},
+        right: () => {this.handleKey({key: "arrowright"})}
+      });
     }
 
     update() {}
 
     handleKey(event) {
-      const key = event.key;
-      if (key === "ArrowLeft" && this.direction !== "right") this.nextDirection = "left";
-      else if (key === "ArrowRight" && this.direction !== "left") this.nextDirection = "right";
-      else if (key === "ArrowUp" && this.direction !== "down") this.nextDirection = "up";
-      else if (key === "ArrowDown" && this.direction !== "up") this.nextDirection = "down";
+      const key = event.key.toLowerCase();
+      if ((key === "arrowleft" || key === "a") && this.direction !== "right") this.nextDirection = "left";
+      else if ((key === "arrowright" || key === "d") && this.direction !== "left") this.nextDirection = "right";
+      else if ((key === "arrowup" || key === "w") && this.direction !== "down") this.nextDirection = "up";
+      else if ((key === "arrowdown" || key === "s") && this.direction !== "up") this.nextDirection = "down";
     }
 
     moveSnake() {

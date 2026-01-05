@@ -23,6 +23,7 @@ export class menu extends Phaser.Scene {
         this.load.image('snowflakes', 'src/img/snowflakes.png');
         this.load.image('flowers', 'src/img/flowers.png');
         this.load.image('skull', 'src/img/skull.png');
+        this.load.image('arrow', 'src/img/arrow.png');
         //SONG
         this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
         this.load.audio("bgBirthdaySong", "src/song/bg_birthday.mp3");
