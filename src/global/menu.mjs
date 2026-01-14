@@ -41,10 +41,10 @@ export class menu extends Phaser.Scene {
         //ICON
         const icon = this.add.image(
             this.cameras.main.width / 2,
-            this.cameras.main.height / 6,
+            this.cameras.main.height / 5.5,
             isEvent.icon
         ).setOrigin(0.5, 0.5)
-        .setScale(4);
+        .setScale(5.5);
         icon.alpha = 0;
         this.tweens.add({
             targets: icon,
@@ -64,8 +64,8 @@ export class menu extends Phaser.Scene {
         //HALLOWEEN
         if (isEvent.event == "halloween") {
             this.lights.enable();
-            this.lights.addLight(this.cameras.main.width / 2, this.cameras.main.height / 2, 800, 0xFFFACD, 3);
-            this.lights.addLight(this.cameras.main.width / 2.25, this.cameras.main.height / 8, 100, 0xFFFACD, 2);
+            this.lights.addLight(this.cameras.main.width / 2, this.cameras.main.height / 2, 1980, 0xFFFACD, 3);
+            this.lights.addLight(this.cameras.main.width / 2.15, this.cameras.main.height / 8, 100, 0xFFFACD, 2);
             const skullfall = new Skullfall(this);
         }
         //BIRTHDAY
@@ -96,12 +96,12 @@ export class menu extends Phaser.Scene {
         }
         //----CREATING OBJECTS----
         //HEAD TEXT
-        const headText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 3, 'Snake Web 2', {
+        const headText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2.5, 'Snake Web 2', {
             fontFamily: 'Pixelify Sans',
-            fontSize: '76px',
+            fontSize: '100px',
             color: '#fff',
             stroke: '#000',
-            strokeThickness: 8
+            strokeThickness: 10
         }).setOrigin(0.5, 0.5);
         headText.alpha = 0;
         this.time.delayedCall(500, () => {
@@ -113,12 +113,12 @@ export class menu extends Phaser.Scene {
             });
         }, [], this);
         //SPLASH TEXT
-        const splashText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2.5, 'by Iceberg game studio', {
+        const splashText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2.15, 'by Iceberg game studio', {
             fontFamily: 'Pixelify Sans',
-            fontSize: '46px',
+            fontSize: '64px',
             color: '#b4e051',
             stroke: '#000',
-            strokeThickness: 6
+            strokeThickness: 8
         }).setOrigin(0.5, 0.5);
         splashText.alpha = 0;
         this.time.delayedCall(1000, () => {
@@ -130,12 +130,12 @@ export class menu extends Phaser.Scene {
             });
         }, [], this);
         //LEVEL TEXT
-        const levelText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Levels completed: ' + window.completeLevels + " / " + window.allLevels, {
+        const levelText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 1.8, 'Levels completed: ' + window.completeLevels + " / " + window.allLevels, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '52px',
+            fontSize: '84px',
             color: '#ffe561',
             stroke: '#000',
-            strokeThickness: 6
+            strokeThickness: 8
         }).setOrigin(0.5, 0.5);
         levelText.alpha = 0;
         this.time.delayedCall(1500, () => {
@@ -147,22 +147,22 @@ export class menu extends Phaser.Scene {
             });
         }, [], this);
         //PLAY BUTTON
-        const playButton = new Button(this, this.cameras.main.width / 2, this.cameras.main.height / 1.5, 'Start game', {
-            width: 500,
-            height: 80,
+        const playButton = new Button(this, this.cameras.main.width / 2, this.cameras.main.height / 1.4, 'Start game', {
+            width: 750,
+            height: 135,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '56px',
+                fontSize: '84px',
                 color: '#b4e051',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             },
             lineStyle: {
                 color: 0xb4e051,
-                lineWidth: 8
+                lineWidth: 12
             },
             onClick: () => {
                 let rLvl = randLevel();
@@ -172,12 +172,12 @@ export class menu extends Phaser.Scene {
                 }
                 //WINDOW
                 const gameWindow = new Window(this, this.cameras.main.width / 2, this.cameras.main.height / 2, {
-                    width: 600,
-                    height: 600,
+                    width: 1000,
+                    height: 1000,
                     backgroundColor: 0xffe561,
                     lineStyle: {
                         color: 0xb4e051,
-                        lineWidth: 8
+                        lineWidth: 10
                     }
                 });
                 gameWindow.alpha = 0;
@@ -190,10 +190,10 @@ export class menu extends Phaser.Scene {
                 //NAME TEXT
                 const nameText = this.add.text(0, 0, "Name: " + rLvl.name, {
                     fontFamily: 'Pixelify Sans',
-                    fontSize: '52px',
+                    fontSize: '84px',
                     color: '#fff',
                     stroke: '#000',
-                    strokeThickness: 6
+                    strokeThickness: 8
                 }).setOrigin(0.5, 0.5);
                 gameWindow.add(nameText);
                 nameText.alpha = 0;
@@ -204,40 +204,40 @@ export class menu extends Phaser.Scene {
                     ease: 'Linear'
                 });
                 //COMPLEXITY TEXT
-                const complexityText = this.add.text(0, -75, "", {
+                const complexityText = this.add.text(0, -150, "", {
                     fontFamily: 'Pixelify Sans',
-                    fontSize: '46px',
-                    color: '#fff',
+                    fontSize: '68px',
+                    color: '#b4e051',
                     stroke: '#000',
-                    strokeThickness: 5
+                    strokeThickness: 7
                 }).setOrigin(0.5, 0.5);
                 gameWindow.add(complexityText);
                 complexityText.alpha = 0;
                 //MOD TEXT
-                const modText = this.add.text(0, 75, "", {
+                const modText = this.add.text(0, 125, "", {
                     fontFamily: 'Pixelify Sans',
-                    fontSize: '46px',
+                    fontSize: '68px',
                     color: '#fff',
                     stroke: '#000',
-                    strokeThickness: 5
+                    strokeThickness: 7
                 }).setOrigin(0.5, 0.5);
                 gameWindow.add(modText);
                 modText.alpha = 0;
                 //TARGET TEXT
-                const targetText = this.add.text(0, 225, "", {
+                const targetText = this.add.text(0, 350, "", {
                     fontFamily: 'Pixelify Sans',
-                    fontSize: '46px',
-                    color: '#fff',
+                    fontSize: '68px',
+                    color: '#b4e051',
                     stroke: '#000',
-                    strokeThickness: 5
+                    strokeThickness: 7
                 }).setOrigin(0.5, 0.5);
                 gameWindow.add(targetText);
                 targetText.alpha = 0;
                 //BAR
-                const bar = this.add.rectangle(-280, -270, 0, 20, 0xb4e051).setOrigin(0, 0.5);
+                const bar = this.add.rectangle(-480, -480, 0, 30, 0xb4e051).setOrigin(0, 0);
                 gameWindow.add(bar);
-                const strokeBar = this.add.rectangle(-280, -270, 560, 20).setOrigin(0, 0.5);
-                strokeBar.setStrokeStyle(3, 0x000000, 1);
+                const strokeBar = this.add.rectangle(-480, -480, 960, 30).setOrigin(0, 0);
+                strokeBar.setStrokeStyle(4, 0x000000, 1);
                 gameWindow.add(strokeBar);
                 bar.alpha = 0;
                 this.tweens.add({
@@ -248,7 +248,7 @@ export class menu extends Phaser.Scene {
                 });
                 this.tweens.add({
                     targets: bar,
-                    width: 560,
+                    width: 960,
                     duration: 10000,
                     ease: 'Linear',
                     onComplete: () => {
@@ -290,7 +290,7 @@ export class menu extends Phaser.Scene {
                     repeating.remove();
                     this.tweens.add({
                         targets: nameText,
-                        y: -225,
+                        y: -380,
                         duration: 500,
                         ease: 'Quad.InOut',
                         onComplete: () => {
@@ -339,10 +339,10 @@ export class menu extends Phaser.Scene {
         //SNAPSHOOT SHOW TEXT
         const snapshotShowText = this.add.text(this.cameras.main.width, this.cameras.main.height, 'Snapshot: ' + gameJson.snapshot, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '36px',
+            fontSize: '54px',
             color: '#b4e051',
             stroke: '#000',
-            strokeThickness: 4
+            strokeThickness: 6
         }).setOrigin(1, 1);
         snapshotShowText.alpha = 0;
         this.time.delayedCall(3000, () => {
@@ -356,10 +356,10 @@ export class menu extends Phaser.Scene {
         //SNAPSHOOT TEXT
         const snapshotText = this.add.text(0, this.cameras.main.height, gameJson.snapshotText, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '36px',
+            fontSize: '54px',
             color: '#ffe561',
             stroke: '#000',
-            strokeThickness: 4
+            strokeThickness: 6
         }).setOrigin(0, 1);
         snapshotText.alpha = 0;
         this.time.delayedCall(2500, () => {

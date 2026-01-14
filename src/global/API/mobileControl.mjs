@@ -10,9 +10,9 @@ export class ClassicControl extends Phaser.GameObjects.Container {
             right = function () {}
         } = func;
         if (scene.sys.game.device.input.touch) {
-            const btUp = new Button(scene, x, y - 80, "", {
-                width: 60,
-                height: 60,
+            const btUp = new Button(scene, x, y - 100, "", {
+                width: 80,
+                height: 80,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -37,8 +37,8 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                 .setScale(1.25)
             );
             const btDown = new Button(scene, x, y, "", {
-                width: 60,
-                height: 60,
+                width: 80,
+                height: 80,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -63,9 +63,9 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                 .setRotation(Math.PI)
                 .setScale(1.25)
             );
-            const btLeft = new Button(scene, x - 80, y, "", {
-                width: 60,
-                height: 60,
+            const btLeft = new Button(scene, x - 100, y, "", {
+                width: 80,
+                height: 80,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -90,9 +90,9 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                 .setRotation(3 * Math.PI / 2)
                 .setScale(1.25)
             );
-            const btRight = new Button(scene, x + 80, y, "", {
-                width: 60,
-                height: 60,
+            const btRight = new Button(scene, x + 100, y, "", {
+                width: 80,
+                height: 80,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,

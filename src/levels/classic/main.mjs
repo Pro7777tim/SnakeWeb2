@@ -6,7 +6,7 @@ export class classic extends Phaser.Scene {
     }
 
     init(data) {
-      this.blockSize = 20;
+      this.blockSize = 30;
       this.widthInBlocks = Math.floor(this.scale.gameSize.width / this.blockSize);
       this.heightInBlocks = Math.floor(this.scale.gameSize.height / this.blockSize);
       data.initLevel(this, {
@@ -40,23 +40,31 @@ export class classic extends Phaser.Scene {
       });
 
       this.input.keyboard.on('keydown', this.handleKey, this);
-      this.control = new ClassicControl(this, 660, 740, {
-        up: () => {this.handleKey({key: "arrowup"})},
-        down: () => {this.handleKey({key: "arrowdown"})},
-        left: () => {this.handleKey({key: "arrowleft"})},
-        right: () => {this.handleKey({key: "arrowright"})}
+      this.control = new ClassicControl(this, 1800, 1000, {
+        up: () => {this.handleKey({code: "ArrowUp"})},
+        down: () => {this.handleKey({code: "ArrowDown"})},
+        left: () => {this.handleKey({code: "ArrowLeft"})},
+        right: () => {this.handleKey({code: "ArrowRight"})}
       });
     }
 
     update() {}
 
     handleKey(event) {
-      const key = event.key.toLowerCase();
-      if ((key === "arrowleft" || key === "a") && this.direction !== "right") this.nextDirection = "left";
-      else if ((key === "arrowright" || key === "d") && this.direction !== "left") this.nextDirection = "right";
-      else if ((key === "arrowup" || key === "w") && this.direction !== "down") this.nextDirection = "up";
-      else if ((key === "arrowdown" || key === "s") && this.direction !== "up") this.nextDirection = "down";
-    }
+      const code = event.code;
+      if ((code === "ArrowLeft" || code === "KeyA") && this.direction !== "right") {
+          this.nextDirection = "left";
+      }
+      else if ((code === "ArrowRight" || code === "KeyD") && this.direction !== "left") {
+          this.nextDirection = "right";
+      }
+      else if ((code === "ArrowUp" || code === "KeyW") && this.direction !== "down") {
+          this.nextDirection = "up";
+      }
+      else if ((code === "ArrowDown" || code === "KeyS") && this.direction !== "up") {
+          this.nextDirection = "down";
+      }
+  }
 
     moveSnake() {
       this.direction = this.nextDirection;

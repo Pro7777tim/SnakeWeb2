@@ -10,8 +10,8 @@ if (isEvent.event == "halloween") {
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
-    width: 800,
-    height: 800,
+    width: 1980,
+    height: 1080,
     backgroundColor: bg,
     disableContextMenu: true,
     pixelArt: true,

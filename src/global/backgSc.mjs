@@ -12,31 +12,31 @@ export class BackgroundScene extends Phaser.Scene {
 
     create() {
         //UI
-        const stroke1 = this.add.rectangle(0, 20, 20, 760, 0x808080, 0.8).setOrigin(0, 0);
-        const stroke2 = this.add.rectangle(780, 20, 20, 760, 0x808080, 0.8).setOrigin(0, 0);
-        const stroke3 = this.add.rectangle(0, 0, 800, 20, 0x808080, 0.8).setOrigin(0, 0);
-        const stroke4 = this.add.rectangle(0, 780, 800, 20, 0x808080, 0.8).setOrigin(0, 0);
+        const stroke1 = this.add.rectangle(0, 540, 30, 1020, 0x808080, 0.8).setOrigin(0, 0.5);
+        const stroke2 = this.add.rectangle(1980, 540, 30, 1020, 0x808080, 0.8).setOrigin(1, 0.5);
+        const stroke3 = this.add.rectangle(0, 0, 1980, 30, 0x808080, 0.8).setOrigin(0, 0);
+        const stroke4 = this.add.rectangle(0, 1080, 1980, 30, 0x808080, 0.8).setOrigin(0, 1);
         let timeTextObj, scoreTextObj;
         let nextY = 0;
         //TIME TEXT
         if (this.shTime) {
             timeTextObj = this.add.text(0, nextY, "Time: " + this.registry.get('time') + "sec", {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '28px',
+                fontSize: '42px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 3
+                strokeThickness: 4
             }).setOrigin(0);
-            nextY += 25;
+            nextY += 35;
         }
         //SCORE TEXT
         if (this.shScore) {
             scoreTextObj = this.add.text(0, nextY, "Score: " + this.registry.get('score'), {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '28px',
+                fontSize: '42px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 3
+                strokeThickness: 4
             }).setOrigin(0);
         }
         //TIME

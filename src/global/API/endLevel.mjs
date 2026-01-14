@@ -12,15 +12,15 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             shTime = true,
             shScore = true
         } = showDataConfig;
-        let nextY = 180;
+        let nextY = 290;
         scene.scene.stop("BackgSc");
         const windowObj = new Window(
             scene,
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 600,
-                height: 600,
+                width: 1000,
+                height: 1000,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
@@ -37,13 +37,13 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //HEAD TEXT
-        const headText = scene.add.text(0, -225, textDefeat, {
+        const headText = scene.add.text(0, -290, textDefeat, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '64px',
+            fontSize: '84px',
             color: '#dd4141',
             stroke: '#000',
-            strokeThickness: 8
-        }).setOrigin(0.5);
+            strokeThickness: 10
+        }).setOrigin(0.5, 1);
         windowObj.add(headText); 
         headText.alpha = 0;
         scene.tweens.add({
@@ -53,12 +53,12 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //SUB TEXT
-        const subTextObj = scene.add.text(0, -150, subText, {
+        const subTextObj = scene.add.text(0, -250, subText, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '48px',
+            fontSize: '68px',
             color: '#fff',
             stroke: '#000',
-            strokeThickness: 6
+            strokeThickness: 8
         }).setOrigin(0.5);
         windowObj.add(subTextObj); 
         subTextObj.alpha = 0;
@@ -74,10 +74,10 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
         if (shTime) {
             const timeTextObj = scene.add.text(0, nextY, "Time: " + scene.registry.get('time') + "sec", {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '44px',
+                fontSize: '64px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             }).setOrigin(0.5);
             windowObj.add(timeTextObj); 
             timeTextObj.alpha = 0;
@@ -89,16 +89,16 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
                     ease: 'Linear'
                 });
             });
-            nextY += 60;
+            nextY += 80;
         }
         //SCORE TEXT
         if (shScore) {
             const scoreTextObj = scene.add.text(0, nextY, "Score: " + scene.registry.get('score'), {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '44px',
+                fontSize: '64px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 5
+                strokeThickness: 8
             }).setOrigin(0.5);
             windowObj.add(scoreTextObj); 
             scoreTextObj.alpha = 0;
@@ -116,18 +116,18 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }
         //RESTART BUTTON
-        const restartButton = new Button(scene, 0, -30, 'Restart game', {
-            width: 400,
-            height: 80,
+        const restartButton = new Button(scene, 0, 0, 'Restart game', {
+            width: 600,
+            height: 120,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '52px',
+                fontSize: '68px',
                 color: '#b4e051',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             },
             lineStyle: {
                 color: 0xb4e051,
@@ -148,18 +148,18 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }, [], scene);
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, 80, 'Exit', {
-            width: 200,
-            height: 80,
+        const exitButton = new Button(scene, 0, 140, 'Exit', {
+            width: 400,
+            height: 120,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '52px',
+                fontSize: '72px',
                 color: '#b4e051',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             },
             lineStyle: {
                 color: 0xb4e051,
@@ -198,7 +198,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             shTime = true,
             shScore = true
         } = showDataConfig;
-        let nextY = 70;
+        let nextY = 200;
         scene.scene.stop("BackgSc");
         updateLevelComplete(window.currentLevel);
         const windowObj = new Window(
@@ -206,8 +206,8 @@ export class WinWindow extends Phaser.GameObjects.Container {
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 600,
-                height: 600,
+                width: 1000,
+                height: 1000,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
@@ -224,13 +224,13 @@ export class WinWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //HEAD TEXT
-        const headText = scene.add.text(0, -225, textWin, {
+        const headText = scene.add.text(0, -290, textWin, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '64px',
+            fontSize: '84px',
             color: '#80c67c',
             stroke: '#000',
-            strokeThickness: 8
-        }).setOrigin(0.5);
+            strokeThickness: 10
+        }).setOrigin(0.5, 1);
         windowObj.add(headText); 
         headText.alpha = 0;
         scene.tweens.add({
@@ -240,12 +240,12 @@ export class WinWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //SUB TEXT
-        const subTextObj = scene.add.text(0, -150, subText, {
+        const subTextObj = scene.add.text(0, -250, subText, {
             fontFamily: 'Pixelify Sans',
-            fontSize: '48px',
+            fontSize: '68px',
             color: '#fff',
             stroke: '#000',
-            strokeThickness: 6
+            strokeThickness: 8
         }).setOrigin(0.5);
         windowObj.add(subTextObj); 
         subTextObj.alpha = 0;
@@ -261,10 +261,10 @@ export class WinWindow extends Phaser.GameObjects.Container {
         if (shTime) {
             const timeTextObj = scene.add.text(0, nextY, "Time: " + scene.registry.get('time') + "sec", {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '44px',
+                fontSize: '64px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             }).setOrigin(0.5);
             windowObj.add(timeTextObj); 
             timeTextObj.alpha = 0;
@@ -276,16 +276,16 @@ export class WinWindow extends Phaser.GameObjects.Container {
                     ease: 'Linear'
                 });
             });
-            nextY += 60;
+            nextY += 80;
         }
         //SCORE TEXT
         if (shScore) {
             const scoreTextObj = scene.add.text(0, nextY, "Score: " + scene.registry.get('score'), {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '44px',
+                fontSize: '64px',
                 color: '#fff',
                 stroke: '#000',
-                strokeThickness: 5
+                strokeThickness: 8
             }).setOrigin(0.5);
             windowObj.add(scoreTextObj); 
             scoreTextObj.alpha = 0;
@@ -303,18 +303,18 @@ export class WinWindow extends Phaser.GameObjects.Container {
             });
         }
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, -30, 'Exit', {
-            width: 200,
-            height: 80,
+        const exitButton = new Button(scene, 0, 0, 'Exit', {
+            width: 400,
+            height: 120,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
                 fontFamily: 'Pixelify Sans',
-                fontSize: '52px',
+                fontSize: '72px',
                 color: '#b4e051',
                 stroke: '#000',
-                strokeThickness: 6
+                strokeThickness: 8
             },
             lineStyle: {
                 color: 0xb4e051,
