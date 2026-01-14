@@ -19,8 +19,8 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 1000,
-                height: 1000,
+                width: 850,
+                height: 850,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
@@ -116,7 +116,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }
         //RESTART BUTTON
-        const restartButton = new Button(scene, 0, 0, 'Restart game', {
+        const restartButton = new Button(scene, 0, -40, 'Restart game', {
             width: 600,
             height: 120,
             backgroundColor: 0xffe561,
@@ -148,7 +148,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }, [], scene);
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, 140, 'Exit', {
+        const exitButton = new Button(scene, 0, 100, 'Exit', {
             width: 400,
             height: 120,
             backgroundColor: 0xffe561,
@@ -198,7 +198,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             shTime = true,
             shScore = true
         } = showDataConfig;
-        let nextY = 200;
+        let nextY = 290;
         scene.scene.stop("BackgSc");
         updateLevelComplete(window.currentLevel);
         const windowObj = new Window(
@@ -206,8 +206,8 @@ export class WinWindow extends Phaser.GameObjects.Container {
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 1000,
-                height: 1000,
+                width: 850,
+                height: 850,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
@@ -268,7 +268,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             }).setOrigin(0.5);
             windowObj.add(timeTextObj); 
             timeTextObj.alpha = 0;
-            scene.time.delayedCall(1500, () => {
+            scene.time.delayedCall(2000, () => {
                 scene.tweens.add({
                     targets: timeTextObj,
                     alpha: 1,
@@ -289,9 +289,9 @@ export class WinWindow extends Phaser.GameObjects.Container {
             }).setOrigin(0.5);
             windowObj.add(scoreTextObj); 
             scoreTextObj.alpha = 0;
-            let time = 2000;
+            let time = 2500;
             if (!shTime) {
-                time = 1500;
+                time = 2000;
             }
             scene.time.delayedCall(time, () => {
                 scene.tweens.add({
@@ -303,7 +303,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             });
         }
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, 0, 'Exit', {
+        const exitButton = new Button(scene, 0, -40, 'Exit', {
             width: 400,
             height: 120,
             backgroundColor: 0xffe561,
@@ -332,6 +332,39 @@ export class WinWindow extends Phaser.GameObjects.Container {
         scene.time.delayedCall(1000, () => {
             scene.tweens.add({
                 targets: exitButton,
+                alpha: 1,
+                duration: 300,
+                ease: 'Linear'
+            });
+        }, [], scene);
+        //NEXT BUTTON
+        const nextButton = new Button(scene, 0, 100, 'Next level', {
+            width: 400,
+            height: 120,
+            backgroundColor: 0xffe561,
+            hoverColor: 0xe1ca56,
+            clickColor: 0xc8b34c,
+            textStyle: {
+                fontFamily: 'Pixelify Sans',
+                fontSize: '72px',
+                color: '#b4e051',
+                stroke: '#000',
+                strokeThickness: 8
+            },
+            lineStyle: {
+                color: 0xb4e051,
+                lineWidth: 8
+            },
+            onClick: () => {
+                scene.scene.launch('LevelIntro');
+                scene.scene.bringToTop('LevelIntro');
+            }
+        });
+        windowObj.add(nextButton);
+        nextButton.alpha = 0;
+        scene.time.delayedCall(1500, () => {
+            scene.tweens.add({
+                targets: nextButton,
                 alpha: 1,
                 duration: 300,
                 ease: 'Linear'

@@ -1,5 +1,6 @@
 import { menu } from "./menu.mjs";
 import { BackgroundScene } from "./backgSc.mjs";
+import { LevelIntro } from "./windows/levelIntro.mjs";
 import { isEvent } from "./event/events.mjs";
 
 let bg = "#fff";
@@ -15,7 +16,7 @@ const config = {
     backgroundColor: bg,
     disableContextMenu: true,
     pixelArt: true,
-    scene: [ menu, BackgroundScene ],
+    scene: [ menu, BackgroundScene, LevelIntro ],
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,

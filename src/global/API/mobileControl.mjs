@@ -10,9 +10,9 @@ export class ClassicControl extends Phaser.GameObjects.Container {
             right = function () {}
         } = func;
         if (scene.sys.game.device.input.touch) {
-            const btUp = new Button(scene, x, y - 100, "", {
-                width: 80,
-                height: 80,
+            const btUp = new Button(scene, x, y - 120, "", {
+                width: 100,
+                height: 100,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -34,11 +34,11 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                     0,
                     "arrow"
                 ).setOrigin(0.5, 0.5)
-                .setScale(1.25)
+                .setScale(1.5)
             );
             const btDown = new Button(scene, x, y, "", {
-                width: 80,
-                height: 80,
+                width: 100,
+                height: 100,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -61,11 +61,11 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                     "arrow"
                 ).setOrigin(0.5, 0.5)
                 .setRotation(Math.PI)
-                .setScale(1.25)
+                .setScale(1.5)
             );
-            const btLeft = new Button(scene, x - 100, y, "", {
-                width: 80,
-                height: 80,
+            const btLeft = new Button(scene, x - 120, y, "", {
+                width: 100,
+                height: 100,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -88,11 +88,11 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                     "arrow"
                 ).setOrigin(0.5, 0.5)
                 .setRotation(3 * Math.PI / 2)
-                .setScale(1.25)
+                .setScale(1.5)
             );
-            const btRight = new Button(scene, x + 100, y, "", {
-                width: 80,
-                height: 80,
+            const btRight = new Button(scene, x + 120, y, "", {
+                width: 100,
+                height: 100,
                 backgroundColor: 0xffe561,
                 hoverColor: 0xe1ca56,
                 clickColor: 0xc8b34c,
@@ -115,7 +115,7 @@ export class ClassicControl extends Phaser.GameObjects.Container {
                     "arrow"
                 ).setOrigin(0.5, 0.5)
                 .setRotation(Math.PI / 2)
-                .setScale(1.25)
+                .setScale(1.5)
             );
             btDown.setAlpha(0.5).setDepth(10);
             btUp.setAlpha(0.5).setDepth(10);

@@ -33,14 +33,14 @@ export class classic extends Phaser.Scene {
       ];
 
       this.moveEvent = this.time.addEvent({
-        delay: 125,
+        delay: 150,
         callback: this.moveSnake,
         callbackScope: this,
         loop: true
       });
 
       this.input.keyboard.on('keydown', this.handleKey, this);
-      this.control = new ClassicControl(this, 1800, 1000, {
+      this.control = new ClassicControl(this, 1770, 990, {
         up: () => {this.handleKey({code: "ArrowUp"})},
         down: () => {this.handleKey({code: "ArrowDown"})},
         left: () => {this.handleKey({code: "ArrowLeft"})},
