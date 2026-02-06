@@ -5,6 +5,7 @@ import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
 import { Skullfall } from "./event/skullfall.mjs";
 import { BirthdayEmitter } from './event/birthdayEmitter.mjs';
+import { Loading } from "./windows/loading.mjs";
 
 export class menu extends Phaser.Scene {
     constructor() {
@@ -12,21 +13,29 @@ export class menu extends Phaser.Scene {
     }
 
     preload() {
-        //IMAGE
+        //LOADING EFFECT
+        new Loading(this);
+        //----LOAD----
+        //BASIC
         this.load.image('snakeIcon', 'src/img/icon.png');
-        this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
-        this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
-        this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
-        this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
-        this.load.image('snakeIconBirthday', 'src/img/iconBirthday.png');
-        this.load.image('snowflakes', 'src/img/snowflakes.png');
-        this.load.image('flowers', 'src/img/flowers.png');
-        this.load.image('skull', 'src/img/skull.png');
         this.load.image('arrow', 'src/img/arrow.png');
-        //SONG
-        this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
-        this.load.audio("bgBirthdaySong", "src/song/bg_birthday.mp3");
-        //FONTS
+        //EVENTS
+        if (isEvent.event == "halloween") {
+            this.load.image('skull', 'src/img/skull.png');
+            this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
+            this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
+        } else if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday") {
+            this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
+            this.load.image('snakeIconBirthday', 'src/img/iconBirthday.png');
+            this.load.audio("bgBirthdaySong", "src/song/bg_birthday.mp3");
+        } else if (isEvent.event == "newYear") {
+            this.load.image('snowflakes', 'src/img/snowflakes.png');
+            this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
+            this.load.audio("bgNewYearSong", "src/song/bg_new_year.mp3");
+        } else if (isEvent.event == "easter") {
+            this.load.image('flowers', 'src/img/flowers.png');
+            this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
+        }
         this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
 

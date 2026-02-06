@@ -47,7 +47,7 @@ function isJuly23(date = new Date()) {
 }
 //----EVENT----
 //VARIABLES
-window.date = new Date(/*2026, 1, 6*/);
+window.date = new Date(/*2026, 9, 29*/);
 const nowIsChristmasPeriod = isChristmasPeriod(window.date);
 const nowIsEaster = isEaster(window.date);
 const nowIsHalloweenWeek = isHalloweenWeek(window.date);
@@ -64,6 +64,7 @@ const isEvent = {
 if (nowIsChristmasPeriod) {
     isEvent.event = "newYear";
     isEvent.icon = "snakeIconChristmas";
+    isEvent.bgSong = "bgNewYearSong";
     isEvent.snapshotText = "Merry Christmas!";
 } else if (nowIsEaster) {
     isEvent.event = "easter";
