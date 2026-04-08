@@ -12,7 +12,35 @@ export class LevelIntro extends Phaser.Scene {
 
         let rLvl = randLevel();
         if (!rLvl) {
-            playButton.txt.setText("Game completed");
+            return;
+        }
+
+        if (!settings.levelIntro) {
+            const data = {
+                initLevel: (th, config) => {
+                    th.scene.launch('BackgSc', config);
+                    th.scene.bringToTop('BackgSc');
+                    th.cameras.main.setBackgroundColor(0xffffff);
+                    th.cameras.main.fadeIn(300, 0, 0, 0);
+                }
+            };
+            scene.cameras.main.fadeOut(300, 0, 0, 0);
+            scene.cameras.main.once(
+                Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+                () => {
+                    window.currentLevel = rLvl.key;
+                    if (scene.scene.get("level")) {
+                        scene.scene.get("level").events.once('destroy', () => {
+                            scene.scene.add("level", rLvl.scene);
+                            scene.scene.start("level", data);
+                        });
+                        scene.scene.remove("level");
+                    } else {
+                        scene.scene.add("level", rLvl.scene);
+                        scene.scene.start("level", data);
+                    }
+                }
+            );
             return;
         }
 
@@ -27,7 +55,7 @@ export class LevelIntro extends Phaser.Scene {
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
-                    lineWidth: 10
+                    lineWidth: 12
                 }
             }
         ).setDepth(15);

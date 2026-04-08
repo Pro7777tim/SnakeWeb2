@@ -12,19 +12,19 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             shTime = true,
             shScore = true
         } = showDataConfig;
-        let nextY = 290;
+        let nextY = 160;
         scene.scene.stop("BackgSc");
         const windowObj = new Window(
             scene,
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 850,
-                height: 850,
+                width: 800,
+                height: 600,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
-                    lineWidth: 8
+                    lineWidth: 12
                 }
             }
         );
@@ -37,7 +37,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //HEAD TEXT
-        const headText = scene.add.text(0, -290, textDefeat, {
+        const headText = scene.add.text(0, -190, textDefeat, {
             fontFamily: 'Pixelify Sans',
             fontSize: '84px',
             color: '#dd4141',
@@ -53,7 +53,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //SUB TEXT
-        const subTextObj = scene.add.text(0, -250, subText, {
+        const subTextObj = scene.add.text(0, -140, subText, {
             fontFamily: 'Pixelify Sans',
             fontSize: '68px',
             color: '#fff',
@@ -116,22 +116,18 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }
         //RESTART BUTTON
-        const restartButton = new Button(scene, 0, -40, 'Restart game', {
-            width: 600,
-            height: 120,
+        const restartButton = new Button(scene, -80, 0, '!replayBtn', {
+            width: 125,
+            height: 125,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
-                fontFamily: 'Pixelify Sans',
-                fontSize: '68px',
-                color: '#b4e051',
-                stroke: '#000',
-                strokeThickness: 8
+                imgScale: 4
             },
             lineStyle: {
                 color: 0xb4e051,
-                lineWidth: 8
+                lineWidth: 12
             },
             onClick: () => {
                 scene.scene.restart();
@@ -148,22 +144,18 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             });
         }, [], scene);
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, 100, 'Exit', {
-            width: 400,
-            height: 120,
+        const exitButton = new Button(scene, 80, 0, '!exitBtn', {
+            width: 125,
+            height: 125,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
-                fontFamily: 'Pixelify Sans',
-                fontSize: '72px',
-                color: '#b4e051',
-                stroke: '#000',
-                strokeThickness: 8
+                imgScale: 4
             },
             lineStyle: {
                 color: 0xb4e051,
-                lineWidth: 8
+                lineWidth: 12
             },
             onClick: () => {
                 scene.cameras.main.fadeOut(300, 0, 0, 0);
@@ -198,20 +190,20 @@ export class WinWindow extends Phaser.GameObjects.Container {
             shTime = true,
             shScore = true
         } = showDataConfig;
-        let nextY = 290;
+        let nextY = 160;
         scene.scene.stop("BackgSc");
-        updateLevelComplete(window.currentLevel);
+        //updateLevelComplete(window.currentLevel);
         const windowObj = new Window(
             scene,
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 850,
-                height: 850,
+                width: 800,
+                height: 600,
                 backgroundColor: 0xffe561,
                 lineStyle: {
                     color: 0xb4e051,
-                    lineWidth: 8
+                    lineWidth: 12
                 }
             }
         );
@@ -224,7 +216,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //HEAD TEXT
-        const headText = scene.add.text(0, -290, textWin, {
+        const headText = scene.add.text(0, -190, textWin, {
             fontFamily: 'Pixelify Sans',
             fontSize: '84px',
             color: '#80c67c',
@@ -240,7 +232,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
             ease: 'Linear'
         });
         //SUB TEXT
-        const subTextObj = scene.add.text(0, -250, subText, {
+        const subTextObj = scene.add.text(0, -140, subText, {
             fontFamily: 'Pixelify Sans',
             fontSize: '68px',
             color: '#fff',
@@ -303,22 +295,18 @@ export class WinWindow extends Phaser.GameObjects.Container {
             });
         }
         //EXIT BUTTON
-        const exitButton = new Button(scene, 0, -40, 'Exit', {
-            width: 400,
-            height: 120,
+        const exitButton = new Button(scene, 80, -0, '!exitBtn', {
+            width: 125,
+            height: 125,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
-                fontFamily: 'Pixelify Sans',
-                fontSize: '72px',
-                color: '#b4e051',
-                stroke: '#000',
-                strokeThickness: 8
+                imgScale: 4
             },
             lineStyle: {
                 color: 0xb4e051,
-                lineWidth: 8
+                lineWidth: 12
             },
             onClick: () => {
                 scene.cameras.main.fadeOut(300, 0, 0, 0);
@@ -338,22 +326,18 @@ export class WinWindow extends Phaser.GameObjects.Container {
             });
         }, [], scene);
         //NEXT BUTTON
-        const nextButton = new Button(scene, 0, 100, 'Next level', {
-            width: 400,
-            height: 120,
+        const nextButton = new Button(scene, -80, 0, '!playBtn', {
+            width: 125,
+            height: 125,
             backgroundColor: 0xffe561,
             hoverColor: 0xe1ca56,
             clickColor: 0xc8b34c,
             textStyle: {
-                fontFamily: 'Pixelify Sans',
-                fontSize: '72px',
-                color: '#b4e051',
-                stroke: '#000',
-                strokeThickness: 8
+                imgScale: 5
             },
             lineStyle: {
                 color: 0xb4e051,
-                lineWidth: 8
+                lineWidth: 12
             },
             onClick: () => {
                 scene.scene.launch('LevelIntro');

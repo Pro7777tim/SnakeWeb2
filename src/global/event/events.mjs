@@ -58,37 +58,39 @@ const nowIsSongBirthday = isJuly23(window.date);
 const isEvent = {
     icon: "snakeIcon",
     event: false,
-    bgSong: false,
+    bgSong: "clasicBg",
     snapshotText: false
 };
-if (nowIsChristmasPeriod) {
-    isEvent.event = "newYear";
-    isEvent.icon = "snakeIconChristmas";
-    isEvent.bgSong = "bgNewYearSong";
-    isEvent.snapshotText = "Merry Christmas!";
-} else if (nowIsEaster) {
-    isEvent.event = "easter";
-    isEvent.icon = "snakeIconEaster";
-    isEvent.snapshotText = "Christ is risen!";
-} else if (nowIsHalloweenWeek) {
-    isEvent.event = "halloween";
-    isEvent.icon = "snakeIconHalloween";
-    isEvent.bgSong = "bgHalloweenSong";
-    isEvent.snapshotText = "Booooo!";
-} else if (nowIsKpncaBirthday) {
-    isEvent.event = "kpncaBirthday";
-    isEvent.icon = "snakeIconBirthdayKpnca";
-    isEvent.bgSong = "bgBirthdaySong";
-    isEvent.snapshotText = "Happy birthday KPNCA!";
-} else if (nowIsPro777Birthday) {
-    isEvent.event = "pro777Birthday";
-    isEvent.icon = "snakeIconBirthday";
-    isEvent.bgSong = "bgBirthdaySong";
-    isEvent.snapshotText = "Happy birthday Pro777!";
-} else if (nowIsSongBirthday) {
-    isEvent.event = "songBirthday";
-    isEvent.icon = "snakeIconBirthday";
-    isEvent.bgSong = "bgBirthdaySong";
-    isEvent.snapshotText = "Happy birthday Song!";
+if (settings.events) {
+    if (nowIsChristmasPeriod) {
+        isEvent.event = "newYear";
+        isEvent.icon = "snakeIconChristmas";
+        isEvent.bgSong = "bgNewYearSong";
+        isEvent.snapshotText = "Merry Christmas!";
+    } else if (nowIsEaster) {
+        isEvent.event = "easter";
+        isEvent.icon = "snakeIconEaster";
+        isEvent.snapshotText = "Christ is risen!";
+    } else if (nowIsHalloweenWeek) {
+        isEvent.event = "halloween";
+        isEvent.icon = "snakeIconHalloween";
+        isEvent.bgSong = "bgHalloweenSong";
+        isEvent.snapshotText = "Booooo!";
+    } else if (nowIsKpncaBirthday) {
+        isEvent.event = "kpncaBirthday";
+        isEvent.icon = "snakeIconBirthdayKpnca";
+        isEvent.bgSong = "bgBirthdaySong";
+        isEvent.snapshotText = "Happy birthday KPNCA!";
+    } else if (nowIsPro777Birthday) {
+        isEvent.event = "pro777Birthday";
+        isEvent.icon = "snakeIconBirthday";
+        isEvent.bgSong = "bgBirthdaySong";
+        isEvent.snapshotText = "Happy birthday Pro777!";
+    } else if (nowIsSongBirthday) {
+        isEvent.event = "songBirthday";
+        isEvent.icon = "snakeIconBirthday";
+        isEvent.bgSong = "bgBirthdaySong";
+        isEvent.snapshotText = "Happy birthday Song!";
+    }
 }
 export { isEvent };

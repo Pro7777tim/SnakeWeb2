@@ -87,7 +87,7 @@ export class classic extends Phaser.Scene {
         const score = this.registry.get('score') + 1;
         this.registry.set('score', score);
 
-        if (score >= 20) {
+        if (score >= /*20*/ 1) {
           this.moveEvent.remove(false);
 
           const winWindow = new WinWindow(this, {

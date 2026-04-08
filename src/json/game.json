@@ -1,4 +1,5 @@
 {
-    "snapshot": "00_0b",
-    "snapshotText": "Load effect and optimization"
+    "snapshot": "00_0c",
+    "snapshotText": "Settings and UI",
+    "showFullScreenButton": true
 }

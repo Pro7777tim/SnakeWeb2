@@ -19,7 +19,7 @@ export class BackgroundScene extends Phaser.Scene {
         let timeTextObj, scoreTextObj;
         let nextY = 0;
         //TIME TEXT
-        if (this.shTime) {
+        if (this.shTime && settings.showTimeAndScore) {
             timeTextObj = this.add.text(0, nextY, "Time: " + this.registry.get('time') + "sec", {
                 fontFamily: 'Pixelify Sans',
                 fontSize: '42px',
@@ -30,7 +30,7 @@ export class BackgroundScene extends Phaser.Scene {
             nextY += 35;
         }
         //SCORE TEXT
-        if (this.shScore) {
+        if (this.shScore && settings.showTimeAndScore) {
             scoreTextObj = this.add.text(0, nextY, "Score: " + this.registry.get('score'), {
                 fontFamily: 'Pixelify Sans',
                 fontSize: '42px',
@@ -44,14 +44,14 @@ export class BackgroundScene extends Phaser.Scene {
             delay: 1000,
             callback: () => {
                 this.registry.set('time', this.registry.get('time') + 1);
-                if (this.shTime) {
+                if (this.shTime && settings.showTimeAndScore) {
                     timeTextObj.setText("Time: " + this.registry.get('time') + "sec");
                 }
             },
             loop: true
         });
         //SCORE
-        if (this.shScore) {
+        if (this.shScore && settings.showTimeAndScore) {
             this.registry.events.on('changedata-score', (parent, value) => {
                 scoreTextObj.setText("Score: " + value);
             });
