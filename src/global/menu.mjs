@@ -5,6 +5,7 @@ import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
 import { Skullfall } from "./event/skullfall.mjs";
 import { BirthdayEmitter } from './event/birthdayEmitter.mjs';
+import { makePhysics } from "./event/physics.mjs";
 import { Loading } from "./windows/loading.mjs";
 import { SettingsWindow } from "./windows/settings.mjs";
 
@@ -107,6 +108,10 @@ export class menu extends Phaser.Scene {
                 loop: true
             });
         }
+        //1stAPRIL
+        if (isEvent.event == "1stApril") {
+            this.cameras.main.setBackgroundColor('#2267b4');
+        }
         //----BG SONG----
         if (!window.bgMusic) {
             window.bgMusic = this.sound.add(isEvent.bgSong, {
@@ -116,7 +121,6 @@ export class menu extends Phaser.Scene {
             bgMusic.play();
         }
         bgMusic.setMute(!window.settings.music);
-
         window.settings = new Proxy(window.settings, {
             set(target, property, value) {
                 if (property == "music") {
@@ -126,7 +130,6 @@ export class menu extends Phaser.Scene {
                 return true;
             }
         });
-
         this.sound.volume = settings.volume / 100;
         //----CREATING OBJECTS----
         //HEAD TEXT
@@ -281,6 +284,59 @@ export class menu extends Phaser.Scene {
                 ease: 'Linear'
             });
         }, [], this);
+        //1stAPRIL
+        if (isEvent.event == "1stApril") {
+            icon.setBlendMode(Phaser.BlendModes.SCREEN);
+            headText.setBlendMode(Phaser.BlendModes.SCREEN);
+            splashText.setBlendMode(Phaser.BlendModes.SCREEN);
+            levelText.setBlendMode(Phaser.BlendModes.SCREEN);
+            snapshotText.setBlendMode(Phaser.BlendModes.SCREEN);
+            snapshotShowText.setBlendMode(Phaser.BlendModes.SCREEN);
+            makePhysics(icon, this);
+            makePhysics(headText, this);
+            makePhysics(splashText, this);
+            makePhysics(levelText, this);
+            makePhysics(snapshotText, this);
+            makePhysics(snapshotShowText, this);
+            playButton.iterate((child) => {
+                child.setBlendMode(Phaser.BlendModes.SCREEN);
+            });
+            settingsButton.iterate((child) => {
+                child.setBlendMode(Phaser.BlendModes.SCREEN);
+            });
+            this.physics.add.existing(playButton);
+            playButton.body.setCollideWorldBounds(true);
+            playButton.body.setBounce(0.6);
+            playButton.body.setMass(Math.random() * 5);
+            playButton.body.setVelocity(
+                Phaser.Math.Between(-200, 200),
+                Phaser.Math.Between(-200, 0)
+            );
+            this.physics.add.existing(settingsButton);
+            settingsButton.body.setCollideWorldBounds(true);
+            settingsButton.body.setBounce(0.6);
+            settingsButton.body.setMass(Math.random() * 5);
+            settingsButton.body.setVelocity(
+                Phaser.Math.Between(-200, 200),
+                Phaser.Math.Between(-200, 0)
+            );
+            this.input.on('pointerdown', (pointer) => {
+                [
+                    icon,
+                    headText,
+                    splashText,
+                    levelText,
+                    snapshotText,
+                    snapshotShowText
+                ].forEach(obj => {
+                    this.physics.add.existing(obj);
+                    const dx = obj.x - pointer.x;
+                    const dy = obj.y - pointer.y;
+                    const force = 1;
+                    obj.body.setVelocity(dx * force, dy * force);
+                });
+            });
+        }
         //HALLOWEEN LIGHTS
         if (isEvent.event == "halloween") {
             icon.setPipeline('Light2D');

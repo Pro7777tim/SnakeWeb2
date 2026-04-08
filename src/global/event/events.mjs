@@ -45,15 +45,20 @@ function isFebruary6(date = new Date()) {
 function isJuly23(date = new Date()) {
     return date.getMonth() === 6 && date.getDate() === 23;
 }
+//1st APRIL BIRTHDAY
+function is1stApril(date = new Date()) {
+    return date.getMonth() === 3 && date.getDate() === 1;
+}
 //----EVENT----
 //VARIABLES
-window.date = new Date(/*2026, 9, 29*/);
+window.date = new Date(/*2026, 3, 1*/);
 const nowIsChristmasPeriod = isChristmasPeriod(window.date);
 const nowIsEaster = isEaster(window.date);
 const nowIsHalloweenWeek = isHalloweenWeek(window.date);
 const nowIsKpncaBirthday = isDecember8(window.date);
 const nowIsPro777Birthday = isFebruary6(window.date);
 const nowIsSongBirthday = isJuly23(window.date);
+const nowIs1stApril = is1stApril(window.date);
 //DATA
 const isEvent = {
     icon: "snakeIcon",
@@ -91,6 +96,9 @@ if (settings.events) {
         isEvent.icon = "snakeIconBirthday";
         isEvent.bgSong = "bgBirthdaySong";
         isEvent.snapshotText = "Happy birthday Song!";
+    } else if (nowIs1stApril) {
+        isEvent.event = "1stApril";
+        isEvent.snapshotText = "10010101101111001010001100000111110010110010011110";
     }
 }
 export { isEvent };
