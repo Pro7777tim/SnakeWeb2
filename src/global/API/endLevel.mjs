@@ -192,7 +192,7 @@ export class WinWindow extends Phaser.GameObjects.Container {
         } = showDataConfig;
         let nextY = 160;
         scene.scene.stop("BackgSc");
-        //updateLevelComplete(window.currentLevel);
+        updateLevelComplete(window.currentLevel);
         const windowObj = new Window(
             scene,
             scene.cameras.main.width / 2,

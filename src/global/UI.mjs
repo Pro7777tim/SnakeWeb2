@@ -103,7 +103,7 @@ export class Checkbox extends Phaser.GameObjects.Container {
             .setInteractive({ useHandCursor: true });
         const check = scene.add.image(x, y, iconKey)
             .setOrigin(0.5)
-            .setScale(iconScale)
+            .setScale(iconScale * 2)
             .setVisible(checked);
         const text = scene.add.text(
             x + spacing,
@@ -190,7 +190,9 @@ export class Slider extends Phaser.GameObjects.Container {
             offsetX = spacing * 1.5;
             if (i === 0) {
                 img.setRotation(-Math.PI / 2);
-                img.x = -spacing / 4
+                img.x = -spacing / 4;
+            } else {
+                img.setScale(scale * 0.9);
             }
             img.index = i;
             img.on('pointerdown', () => {

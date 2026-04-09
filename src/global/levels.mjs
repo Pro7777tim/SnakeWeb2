@@ -1,5 +1,5 @@
 //IMPORTS
-import { classic } from "../levels/classic/main.mjs";
+import { classic } from "../levels/classic.mjs";
 
 //FUNCTIONS
 function randLevel() {
@@ -49,45 +49,9 @@ window.gImage = {
         key: "classic",
         name: "Classic",
         complexity: "Easy",
-        mod: "The classic,\nwell-known snake!",
+        mod: "None",
         target: "Eat 20 apples",
         complete: getComplate(lImage, "classic")
-    },
-    classic2: {
-        scene: classic,
-        key: "classic2",
-        name: "Classic2",
-        complexity: "Easy",
-        mod: "The classic,\nwell-known snake!",
-        target: "Eat 20 apples",
-        complete: getComplate(lImage, "classic2")
-    },
-    classic3: {
-        scene: classic,
-        key: "classic3",
-        name: "Classic3",
-        complexity: "Easy",
-        mod: "The classic,\nwell-known snake!",
-        target: "Eat 20 apples",
-        complete: getComplate(lImage, "classic3")
-    },
-    classic4: {
-        scene: classic,
-        key: "classic4",
-        name: "Classic4",
-        complexity: "Easy",
-        mod: "The classic,\nwell-known snake!",
-        target: "Eat 20 apples",
-        complete: getComplate(lImage, "classic4")
-    },
-    classic5: {
-        scene: classic,
-        key: "classic5",
-        name: "Classic5",
-        complexity: "Easy",
-        mod: "The classic,\nwell-known snake!",
-        target: "Eat 20 apples",
-        complete: getComplate(lImage, "classic5")
     }
 };
 

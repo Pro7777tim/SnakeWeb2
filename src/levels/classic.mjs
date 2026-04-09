@@ -1,12 +1,12 @@
-import { DefeatWindow, WinWindow } from "../../global/API/endLevel.mjs"
-import { ClassicControl } from "../../global/API/mobileControl.mjs";
+import { DefeatWindow, WinWindow } from "../global/API/endLevel.mjs"
+import { ClassicControl } from "../global/API/mobileControl.mjs";
 export class classic extends Phaser.Scene {
     constructor() {
       super({ key: 'level' });
     }
 
     init(data) {
-      this.blockSize = 30;
+      this.blockSize = 40;
       this.widthInBlocks = Math.floor(this.scale.gameSize.width / this.blockSize);
       this.heightInBlocks = Math.floor(this.scale.gameSize.height / this.blockSize);
       data.initLevel(this, {
@@ -31,6 +31,10 @@ export class classic extends Phaser.Scene {
         this.getRandomBlock(),
         this.getRandomBlock()
       ];
+
+      this.snakeSprites = [];
+      this.stoneSprites = [];
+      this.appleSprite = null;
 
       this.moveEvent = this.time.addEvent({
         delay: 150,
@@ -87,10 +91,10 @@ export class classic extends Phaser.Scene {
         const score = this.registry.get('score') + 1;
         this.registry.set('score', score);
 
-        if (score >= /*20*/ 1) {
+        if (score >= 20) {
           this.moveEvent.remove(false);
 
-          const winWindow = new WinWindow(this, {
+          new WinWindow(this, {
             textWin: "You win!",
             subText: "The snake is full"
           }, {
@@ -150,43 +154,116 @@ export class classic extends Phaser.Scene {
     }
 
     redraw() {
-      this.clearGraphics?.destroy();
-      this.clearGraphics = this.add.graphics();
+      if (!this.snakeSprites) this.snakeSprites = [];
+      if (!this.stoneSprites) this.stoneSprites = [];
+
       for (let i = 0; i < this.snake.length; i++) {
         const b = this.snake[i];
-        const x = b.x * this.blockSize;
-        const y = b.y * this.blockSize;
-        if (i === 0) {
-          this.clearGraphics.fillStyle(0x00ff00);
-        } else if (i % 2 === 0) {
-          this.clearGraphics.fillStyle(0xFFD700);
+
+        const x = b.x * this.blockSize + this.blockSize / 2;
+        const y = b.y * this.blockSize + this.blockSize / 2;
+        const offset = this.blockSize * 0.2;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        const key = (i === 0) ? 'head' : 'body';
+
+        let sprite = this.snakeSprites[i];
+
+        if (!sprite || !sprite.scene) {
+          sprite = this.add.image(x, y, key)
+            .setOrigin(0.5)
+            .setDepth(2);
+
+          this.snakeSprites[i] = sprite;
         } else {
-          this.clearGraphics.fillStyle(0x0000FF);
+          sprite.setTexture(key);
         }
-        this.clearGraphics.fillRect(x, y, this.blockSize, this.blockSize);
+
+        if (i === 0) {
+          if (this.direction === 'right') {sprite.setAngle(90); offsetX = offset;}
+          else if (this.direction === 'left') {sprite.setAngle(270); offsetX = -offset;}
+          else if (this.direction === 'up') {sprite.setAngle(0); offsetY = -offset;}
+          else if (this.direction === 'down') {sprite.setAngle(180); offsetY = offset;}
+          sprite.setScale(2.1);
+        } else {
+          sprite.setScale(1.9);
+        }
+
+        this.tweens.add({
+          targets: sprite,
+          x: x + offsetX,
+          y: y + offsetY,
+          duration: this.moveEvent.delay,
+          ease: 'Linear'
+        });
       }
 
-      this.clearGraphics.fillStyle(0x32CD32);
-      this.clearGraphics.fillCircle(
-        this.apple.x * this.blockSize + this.blockSize / 2,
-        this.apple.y * this.blockSize + this.blockSize / 2,
-        this.blockSize / 2
-      );
+      for (let i = this.snake.length; i < this.snakeSprites.length; i++) {
+        this.snakeSprites[i]?.destroy();
+        this.snakeSprites[i] = null;
+      }
+      this.snakeSprites.length = this.snake.length;
 
-      this.clearGraphics.fillStyle(0x2F4F4F);
-      for (let stone of this.stones) {
-        this.clearGraphics.fillRect(
-          stone.x * this.blockSize,
-          stone.y * this.blockSize,
-          this.blockSize, this.blockSize
-        );
+      const appleX = this.apple.x * this.blockSize + this.blockSize / 2;
+      const appleY = this.apple.y * this.blockSize + this.blockSize / 2;
+
+      if (!this.appleSprite) {
+        this.appleSprite = this.add.image(
+          appleX,
+          appleY,
+          'apple'
+        )
+        .setDisplaySize(this.blockSize, this.blockSize)
+        .setOrigin(0.5)
+        .setScale(3)
+        .setDepth(1);
+      } else {
+        this.tweens.add({
+          targets: this.appleSprite,
+          x: appleX,
+          y: appleY,
+          duration: this.moveEvent.delay,
+          ease: 'Linear'
+        });
+      }
+
+      for (let i = 0; i < this.stones.length; i++) {
+        const stone = this.stones[i];
+
+        const x = stone.x * this.blockSize;
+        const y = stone.y * this.blockSize;
+
+        let s = this.stoneSprites[i];
+
+        if (!s) {
+          s = this.add.rectangle(
+            x,
+            y,
+            this.blockSize,
+            this.blockSize,
+            0x2F4F4F
+          )
+          .setOrigin(0)
+          .setDepth(1);
+
+          this.stoneSprites[i] = s;
+        } else {
+          this.tweens.add({
+            targets: s,
+            x: x,
+            y: y,
+            duration: this.moveEvent.delay,
+            ease: 'Linear'
+          });
+        }
       }
     }
 
     gameOver() {
       this.moveEvent.remove(false);
 
-      const defeatWindow = new DefeatWindow(this, {
+      new DefeatWindow(this, {
         textDefeat: "You lost!",
         subText: "The snake crashed"
       }, {

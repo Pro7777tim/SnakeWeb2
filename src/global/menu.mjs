@@ -200,6 +200,7 @@ export class menu extends Phaser.Scene {
             onClick: () => {
                 this.scene.launch('LevelIntro');
                 this.scene.bringToTop('LevelIntro');
+                this.scene.pause();
             }
         });
         playButton.alpha = 0;
