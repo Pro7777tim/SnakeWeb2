@@ -1,6 +1,6 @@
 import { DefeatWindow, WinWindow } from "../global/API/endLevel.mjs"
 import { ClassicControl } from "../global/API/mobileControl.mjs";
-export class classic extends Phaser.Scene {
+export class classic_walls extends Phaser.Scene {
     constructor() {
       super({ key: 'level' });
     }
@@ -24,9 +24,18 @@ export class classic extends Phaser.Scene {
       this.direction = 'right';
       this.nextDirection = 'right';
 
+      this.stones = [];
+
       this.apple = this.getEmptyRandomBlock();
 
+      this.stones = [
+        this.getEmptyRandomBlock(),
+        this.getEmptyRandomBlock(),
+        this.getEmptyRandomBlock()
+      ];
+
       this.snakeSprites = [];
+      this.stoneSprites = [];
       this.appleSprite = null;
 
       this.moveEvent = this.time.addEvent({
@@ -107,6 +116,7 @@ export class classic extends Phaser.Scene {
         }
 
         this.apple = this.getEmptyRandomBlock();
+        this.stones = this.stones.map(() => this.getEmptyRandomBlock());
       } else {
         this.snake.pop();
       }
@@ -119,6 +129,12 @@ export class classic extends Phaser.Scene {
           point.x >= this.widthInBlocks ||
           point.y >= this.heightInBlocks) {
         return true;
+      }
+
+      for (let stone of this.stones) {
+        if (Phaser.Geom.Point.Equals(point, stone)) {
+          return true;
+        }
       }
 
       for (let i = 0; i < this.snake.length; i++) {
@@ -142,6 +158,7 @@ export class classic extends Phaser.Scene {
         p = this.getRandomBlock();
       } while (
         this.snake.some(s => Phaser.Geom.Point.Equals(s, p)) ||
+        this.stones.some(s => Phaser.Geom.Point.Equals(s, p)) ||
         (this.apple && Phaser.Geom.Point.Equals(this.apple, p))
       );
       return p;
@@ -149,6 +166,7 @@ export class classic extends Phaser.Scene {
 
     redraw() {
       if (!this.snakeSprites) this.snakeSprites = [];
+      if (!this.stoneSprites) this.stoneSprites = [];
 
       for (let i = 0; i < this.snake.length; i++) {
         const b = this.snake[i];
@@ -228,6 +246,41 @@ export class classic extends Phaser.Scene {
             duration: this.moveEvent.delay,
             ease: 'Linear'
           });
+        }
+      }
+
+      for (let i = 0; i < this.stones.length; i++) {
+        const stone = this.stones[i];
+
+        const x = stone.x * this.blockSize;
+        const y = stone.y * this.blockSize;
+
+        let s = this.stoneSprites[i];
+
+        if (!s) {
+          s = this.add.image(
+            x,
+            y,
+            'rock'
+          )
+          .setDisplaySize(this.blockSize, this.blockSize)
+          .setOrigin(0.15, 0.15)
+          .setScale(3)
+          .setDepth(2);
+
+          this.stoneSprites[i] = s;
+        } else {
+          if (s.x !== x || s.y !== y) {
+            this.tweens.killTweensOf(s);
+
+            this.tweens.add({
+              targets: s,
+              x: x,
+              y: y,
+              duration: this.moveEvent.delay,
+              ease: 'Linear'
+            });
+          }
         }
       }
     }

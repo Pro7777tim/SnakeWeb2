@@ -15,6 +15,8 @@ export class LevelIntro extends Phaser.Scene {
             return;
         }
 
+        scene.scene.pause("menu");
+
         if (!settings.levelIntro) {
             const data = {
                 initLevel: (th, config) => {

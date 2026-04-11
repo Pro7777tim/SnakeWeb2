@@ -5,7 +5,7 @@ import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
 import { Skullfall } from "./event/skullfall.mjs";
 import { BirthdayEmitter } from './event/birthdayEmitter.mjs';
-import { makePhysics } from "./event/physics.mjs";
+import { makePhysics, launchEffect } from "./event/physics.mjs";
 import { Loading } from "./windows/loading.mjs";
 import { SettingsWindow } from "./windows/settings.mjs";
 
@@ -27,22 +27,25 @@ export class menu extends Phaser.Scene {
         this.load.image('exitBtn', 'src/img/exitBtn.png');
         this.load.image('crossBtn', 'src/img/crossBtn.png');
         this.load.image('apple', 'src/img/apple.png');
+        this.load.image('rock', 'src/img/rock.png');
         this.load.image('head', 'src/img/head.png');
         this.load.image('body', 'src/img/body.png');
-        this.load.audio("clasicBg", "src/song/clasic_bg.mp3");
+        this.load.audio("clasicBg", "src/sound/clasic_bg.mp3");
+        this.load.audio("eatSn", "src/sound/eat.mp3");
+        this.load.audio("collisionSn", "src/sound/collision.mp3");
         //EVENTS
         if (isEvent.event == "halloween") {
             this.load.image('skull', 'src/img/skull.png');
             this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
-            this.load.audio("bgHalloweenSong", "src/song/bg_halloween.mp3");
+            this.load.audio("bgHalloweenSong", "src/sound/bg_halloween.mp3");
         } else if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday") {
             this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
             this.load.image('snakeIconBirthday', 'src/img/iconBirthday.png');
-            this.load.audio("bgBirthdaySong", "src/song/bg_birthday.mp3");
+            this.load.audio("bgBirthdaySong", "src/sound/bg_birthday.mp3");
         } else if (isEvent.event == "newYear") {
             this.load.image('snowflakes', 'src/img/snowflakes.png');
             this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
-            this.load.audio("bgNewYearSong", "src/song/bg_new_year.mp3");
+            this.load.audio("bgNewYearSong", "src/sound/bg_new_year.mp3");
         } else if (isEvent.event == "easter") {
             this.load.image('flowers', 'src/img/flowers.png');
             this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
@@ -200,7 +203,6 @@ export class menu extends Phaser.Scene {
             onClick: () => {
                 this.scene.launch('LevelIntro');
                 this.scene.bringToTop('LevelIntro');
-                this.scene.pause();
             }
         });
         playButton.alpha = 0;
@@ -287,55 +289,16 @@ export class menu extends Phaser.Scene {
         }, [], this);
         //1stAPRIL
         if (isEvent.event == "1stApril") {
-            icon.setBlendMode(Phaser.BlendModes.SCREEN);
-            headText.setBlendMode(Phaser.BlendModes.SCREEN);
-            splashText.setBlendMode(Phaser.BlendModes.SCREEN);
-            levelText.setBlendMode(Phaser.BlendModes.SCREEN);
-            snapshotText.setBlendMode(Phaser.BlendModes.SCREEN);
-            snapshotShowText.setBlendMode(Phaser.BlendModes.SCREEN);
-            makePhysics(icon, this);
-            makePhysics(headText, this);
-            makePhysics(splashText, this);
-            makePhysics(levelText, this);
-            makePhysics(snapshotText, this);
-            makePhysics(snapshotShowText, this);
-            playButton.iterate((child) => {
-                child.setBlendMode(Phaser.BlendModes.SCREEN);
-            });
-            settingsButton.iterate((child) => {
-                child.setBlendMode(Phaser.BlendModes.SCREEN);
-            });
-            this.physics.add.existing(playButton);
-            playButton.body.setCollideWorldBounds(true);
-            playButton.body.setBounce(0.6);
-            playButton.body.setMass(Math.random() * 5);
-            playButton.body.setVelocity(
-                Phaser.Math.Between(-200, 200),
-                Phaser.Math.Between(-200, 0)
-            );
-            this.physics.add.existing(settingsButton);
-            settingsButton.body.setCollideWorldBounds(true);
-            settingsButton.body.setBounce(0.6);
-            settingsButton.body.setMass(Math.random() * 5);
-            settingsButton.body.setVelocity(
-                Phaser.Math.Between(-200, 200),
-                Phaser.Math.Between(-200, 0)
-            );
-            this.input.on('pointerdown', (pointer) => {
-                [
-                    icon,
-                    headText,
-                    splashText,
-                    levelText,
-                    snapshotText,
-                    snapshotShowText
-                ].forEach(obj => {
-                    this.physics.add.existing(obj);
-                    const dx = obj.x - pointer.x;
-                    const dy = obj.y - pointer.y;
-                    const force = 1;
-                    obj.body.setVelocity(dx * force, dy * force);
-                });
+            launchEffect({
+                icon,
+                headText,
+                splashText,
+                levelText,
+                snapshotText,
+                snapshotShowText,
+                playButton,
+                settingsButton,
+                scene: this
             });
         }
         //HALLOWEEN LIGHTS

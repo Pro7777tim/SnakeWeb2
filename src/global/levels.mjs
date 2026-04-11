@@ -1,5 +1,6 @@
 //IMPORTS
 import { classic } from "../levels/classic.mjs";
+import { classic_walls } from "../levels/classic_walls.mjs";
 
 //FUNCTIONS
 function randLevel() {
@@ -52,6 +53,15 @@ window.gImage = {
         mod: "None",
         target: "Eat 20 apples",
         complete: getComplate(lImage, "classic")
+    },
+    classic_walls: {
+        scene: classic_walls,
+        key: "classic_walls",
+        name: "Classic with walls",
+        complexity: "Easy",
+        mod: "Three walls added",
+        target: "Eat 20 apples",
+        complete: getComplate(lImage, "classic_walls")
     }
 };
 
