@@ -5,6 +5,7 @@ const gsettings = {
     events: true,
     levelIntro: true,
     showTimeAndScore: true,
+    showFpsIndicator: false,
     volume: 100
 }
 //LOCAL IMAGE

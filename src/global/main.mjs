@@ -1,5 +1,6 @@
 import { menu } from "./menu.mjs";
 import { BackgroundScene } from "./backgSc.mjs";
+import { FpsIndicatorScene } from "./fpsIndicatorSc.mjs";
 import { LevelIntro } from "./windows/levelIntro.mjs";
 
 const config = {
@@ -10,7 +11,7 @@ const config = {
     backgroundColor: "#fff",
     disableContextMenu: true,
     pixelArt: true,
-    scene: [ menu, BackgroundScene, LevelIntro ],
+    scene: [ menu, BackgroundScene, LevelIntro, FpsIndicatorScene ],
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,

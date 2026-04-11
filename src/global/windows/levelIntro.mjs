@@ -35,11 +35,15 @@ export class LevelIntro extends Phaser.Scene {
                         scene.scene.get("level").events.once('destroy', () => {
                             scene.scene.add("level", rLvl.scene);
                             scene.scene.start("level", data);
+                            scene.scene.launch("FpsIndicatorScene");
+                            scene.scene.bringToTop("FpsIndicatorScene");
                         });
                         scene.scene.remove("level");
                     } else {
                         scene.scene.add("level", rLvl.scene);
                         scene.scene.start("level", data);
+                        scene.scene.launch("FpsIndicatorScene");
+                        scene.scene.bringToTop("FpsIndicatorScene");
                     }
                 }
             );

@@ -229,6 +229,32 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
             }
         );
 
+        const fpsIndicatorCheckbox = new Checkbox(
+            scene,
+            -350,
+            -100,
+            'Show fps\nindicator',
+            settings.showFpsIndicator,
+            value => setSettings("showFpsIndicator", value),
+            {
+                size: 120,
+                backgroundColor: 0xffe561,
+                borderColor: 0xb4e051,
+                borderWidth: 8,
+                iconKey: 'apple',
+                iconScale: 2.5,
+                spacing: 80,
+                textStyle: {
+                    fontFamily: 'Pixelify Sans',
+                    fontSize: '64px',
+                    color: '#fff',
+                    stroke: '#000',
+                    strokeThickness: 8
+                },
+                lineWidth: 12
+            }
+        );
+
         const volumeSlider = new Slider(
             scene,
             -800,
@@ -259,7 +285,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
             const fullScreenCheckbox = new Checkbox(
                 scene,
                 -350,
-                -100,
+                50,
                 'FullScreen',
                 settings.fullScreen,
                 (value) => {
@@ -297,6 +323,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
             eventCheckbox,
             modileModeCheckbox,
             showTimeAndScoreCheckbox,
+            fpsIndicatorCheckbox,
             levelIntroCheckbox,
             volumeSlider
         ]);
