@@ -1,11 +1,11 @@
 import { loadJson } from "../json/loadJson.mjs";
-import { Button } from './UI.mjs';
+import { Button, ConfirmWindow } from './UI.mjs';
 import { isEvent } from "./event/events.mjs";
 import { SnowEmitter } from "./event/snowfall.mjs";
 import { EasterEmitter } from "./event/easterEmitter.mjs";
 import { Skullfall } from "./event/skullfall.mjs";
 import { BirthdayEmitter } from './event/birthdayEmitter.mjs';
-import { makePhysics, launchEffect } from "./event/physics.mjs";
+import { launchEffect } from "./event/physics.mjs";
 import { Loading } from "./windows/loading.mjs";
 import { SettingsWindow } from "./windows/settings.mjs";
 
@@ -20,11 +20,13 @@ export class menu extends Phaser.Scene {
         //----LOAD----
         //BASIC
         this.load.image('snakeIcon', 'src/img/icon.png');
+        this.load.image('snakeVictoriousIcon', 'src/img/victoriousIcon.png');
         this.load.image('arrow', 'src/img/arrow.png');
         this.load.image('playBtn', 'src/img/playBtn.png');
         this.load.image('settingsBtn', 'src/img/settingsBtn.png');
         this.load.image('replayBtn', 'src/img/replayBtn.png');
         this.load.image('exitBtn', 'src/img/exitBtn.png');
+        this.load.image('checkMarkBtn', 'src/img/checkMarkBtn.png');
         this.load.image('crossBtn', 'src/img/crossBtn.png');
         this.load.image('apple', 'src/img/apple.png');
         this.load.image('rock', 'src/img/rock.png');
@@ -96,7 +98,7 @@ export class menu extends Phaser.Scene {
             new Skullfall(this);
         }
         //BIRTHDAY
-        if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday") {
+        if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday" || completeLevels == allLevels) {
             const confetti = new BirthdayEmitter(this);
             this.input.on('pointerdown', pointer => {
                 confetti.shoot(pointer.worldX, pointer.worldY, 50);
@@ -201,6 +203,24 @@ export class menu extends Phaser.Scene {
                 lineWidth: 12
             },
             onClick: () => {
+                if (completeLevels == allLevels) {
+                    if (levelText.text != "All levels completed!") {
+                        levelText.text = "All levels completed!";
+                        playButton.list[2].setTexture("replayBtn");
+                        playButton.list[2].setScale(4);
+                    } else if (playButton.list[2]) {
+                        new ConfirmWindow(this, "Do you want to reset progress?", 1200, (value) => {
+                            if (value) {
+                                new ConfirmWindow(this, "Are you sure?", 600, (value2) => {
+                                    if (value2) {
+                                        localStorage.removeItem("local_image");
+                                        location.reload();
+                                    }
+                                })
+                            }
+                        });
+                    }
+                }
                 this.scene.launch('LevelIntro');
                 this.scene.bringToTop('LevelIntro');
             }

@@ -229,3 +229,104 @@ export class Slider extends Phaser.GameObjects.Container {
         scene.add.existing(this);
     }
 }
+
+export class ConfirmWindow extends Phaser.GameObjects.Container {
+    constructor(scene, text, width, func) {
+        super(
+            scene,
+            scene.scale.width / 2,
+            scene.scale.height / 2
+        );
+        const windowObj = new Window(
+            scene,
+            0,
+            0,
+            {
+                width: width,
+                height: 250,
+                backgroundColor: 0xffe561,
+                lineStyle: {
+                    color: 0xb4e051,
+                    lineWidth: 12
+                }
+            }
+        );
+        this.add(windowObj);
+        windowObj.alpha = 0;
+        scene.tweens.add({
+            targets: windowObj,
+            alpha: 1,
+            duration: 300,
+            ease: 'Linear'
+        });
+        const label = scene.add.text(
+            0,
+            -75,
+            text,
+            {
+                fontFamily: 'Pixelify Sans',
+                fontSize: '64px',
+                color: '#fff',
+                stroke: '#000',
+                strokeThickness: 8
+            }
+        ).setOrigin(0.5, 0.5);
+        windowObj.add(label);
+        const crossBtn = scene.add.image(
+            100,
+            50,
+            "crossBtn"
+        ).setOrigin(0.5, 0.5)
+        .setScale(7)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerup', () => {
+            crossBtn.setTint(0xffffff);
+            func(false);
+            scene.tweens.add({
+                targets: windowObj,
+                alpha: 0,
+                duration: 300,
+                ease: 'Linear'
+            });
+        })
+        .on('pointerdown', () => {
+            crossBtn.setTint(0x999999);
+        })
+        .on('pointerover', () => {
+            crossBtn.setTint(0xcccccc);
+        })
+        .on('pointerout', () => {
+            crossBtn.setTint(0xffffff);
+        });
+        windowObj.add(crossBtn);
+        const checkMarkBtn = scene.add.image(
+            -100,
+            50,
+            "checkMarkBtn"
+        ).setOrigin(0.5, 0.5)
+        .setScale(7)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerup', () => {
+            checkMarkBtn.setTint(0xffffff);
+            func(true);
+            scene.tweens.add({
+                targets: windowObj,
+                alpha: 0,
+                duration: 300,
+                ease: 'Linear'
+            });
+        })
+        .on('pointerdown', () => {
+            checkMarkBtn.setTint(0x999999);
+        })
+        .on('pointerover', () => {
+            checkMarkBtn.setTint(0xcccccc);
+        })
+        .on('pointerout', () => {
+            checkMarkBtn.setTint(0xffffff);
+        });
+        windowObj.add(checkMarkBtn);
+        this.setDepth(15);
+        scene.add.existing(this);
+    }
+}

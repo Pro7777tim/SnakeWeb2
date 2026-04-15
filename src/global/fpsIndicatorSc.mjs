@@ -20,7 +20,7 @@ export class FpsIndicatorScene extends Phaser.Scene {
         .setVisible(settings.showFpsIndicator);
 
         this.time.addEvent({
-            delay: 500,
+            delay: 250,
             loop: true,
             callback: () => {
                 const fps = Math.floor(this.game.loop.actualFps);

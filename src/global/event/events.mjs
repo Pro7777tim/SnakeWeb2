@@ -66,6 +66,9 @@ const isEvent = {
     bgSong: "clasicBg",
     snapshotText: false
 };
+if (completeLevels == allLevels) {
+    isEvent.icon = "snakeVictoriousIcon";
+}
 if (settings.events) {
     if (nowIsChristmasPeriod) {
         isEvent.event = "newYear";

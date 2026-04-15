@@ -33,7 +33,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
             -440,
             "crossBtn"
         ).setOrigin(0.5, 0.5)
-        .setScale(4)
+        .setScale(6)
         .setInteractive({ useHandCursor: true })
         .on('pointerup', () => {
             crossBtn.setTint(0xffffff);
