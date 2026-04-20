@@ -27,6 +27,7 @@ export class Button extends Phaser.GameObjects.Container {
                 scene.add.image(
                     0,
                     0,
+                    "menu_icon",
                     label.slice(1),
                 ).setOrigin(0.5, 0.5)
                 .setScale(textStyle.imgScale)
@@ -89,6 +90,7 @@ export class Checkbox extends Phaser.GameObjects.Container {
             borderColor = 0xffffff,
             borderWidth = 2,
             iconKey = 'apple',
+            atlas = 'classic',
             iconScale = 0.8,
             textStyle = {
                 fontSize: '24px',
@@ -101,7 +103,7 @@ export class Checkbox extends Phaser.GameObjects.Container {
         const box = scene.add.rectangle(x, y, size, size, backgroundColor)
             .setStrokeStyle(borderWidth, borderColor)
             .setInteractive({ useHandCursor: true });
-        const check = scene.add.image(x, y, iconKey)
+        const check = scene.add.image(x, y, atlas, iconKey)
             .setOrigin(0.5)
             .setScale(iconScale * 2)
             .setVisible(checked);
@@ -169,6 +171,7 @@ export class Slider extends Phaser.GameObjects.Container {
         const {
             headKey = 'head',
             bodyKey = 'body',
+            atlas = "classic",
             emptyAlpha = 0.3,
             spacing = 40,
             scale = 1
@@ -182,6 +185,7 @@ export class Slider extends Phaser.GameObjects.Container {
             const img = scene.add.image(
                 i * offsetX,
                 0,
+                atlas,
                 key
             )
             .setOrigin(0.5)
@@ -275,6 +279,7 @@ export class ConfirmWindow extends Phaser.GameObjects.Container {
         const crossBtn = scene.add.image(
             100,
             50,
+            "menu_icon",
             "crossBtn"
         ).setOrigin(0.5, 0.5)
         .setScale(7)
@@ -302,6 +307,7 @@ export class ConfirmWindow extends Phaser.GameObjects.Container {
         const checkMarkBtn = scene.add.image(
             -100,
             50,
+            "menu_icon",
             "checkMarkBtn"
         ).setOrigin(0.5, 0.5)
         .setScale(7)

@@ -51,7 +51,7 @@ function is1stApril(date = new Date()) {
 }
 //----EVENT----
 //VARIABLES
-window.date = new Date(/*2026, 3, 1*/);
+window.date = new Date(/*2025, 3, 20*/);
 const nowIsChristmasPeriod = isChristmasPeriod(window.date);
 const nowIsEaster = isEaster(window.date);
 const nowIsHalloweenWeek = isHalloweenWeek(window.date);
@@ -66,9 +66,6 @@ const isEvent = {
     bgSong: "clasicBg",
     snapshotText: false
 };
-if (completeLevels == allLevels) {
-    isEvent.icon = "snakeVictoriousIcon";
-}
 if (settings.events) {
     if (nowIsChristmasPeriod) {
         isEvent.event = "newYear";

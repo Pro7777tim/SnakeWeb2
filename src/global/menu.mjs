@@ -19,40 +19,26 @@ export class menu extends Phaser.Scene {
         new Loading(this);
         //----LOAD----
         //BASIC
-        this.load.image('snakeIcon', 'src/img/icon.png');
-        this.load.image('snakeVictoriousIcon', 'src/img/victoriousIcon.png');
-        this.load.image('arrow', 'src/img/arrow.png');
-        this.load.image('playBtn', 'src/img/playBtn.png');
-        this.load.image('settingsBtn', 'src/img/settingsBtn.png');
-        this.load.image('replayBtn', 'src/img/replayBtn.png');
-        this.load.image('exitBtn', 'src/img/exitBtn.png');
-        this.load.image('checkMarkBtn', 'src/img/checkMarkBtn.png');
-        this.load.image('crossBtn', 'src/img/crossBtn.png');
-        this.load.image('apple', 'src/img/apple.png');
-        this.load.image('rock', 'src/img/rock.png');
-        this.load.image('head', 'src/img/head.png');
-        this.load.image('body', 'src/img/body.png');
+        this.load.atlas('icons', 'src/img/icons_atlas.png', 'src/img/json/icons_atlas.json');
+        this.load.atlas('particles', 'src/img/particles_atlas.png', 'src/img/json/particles_atlas.json');
+        this.load.atlas('menu_icon', 'src/img/menu_icon_atlas.png', 'src/img/json/menu_icon_atlas.json');
+
+        this.load.atlas('classic', 'src/img/levels/classic_atlas.png', 'src/img/json/levels/classic_atlas.json');
+        this.load.image('rock', 'src/img/levels/rock.png');
+
         this.load.audio("clasicBg", "src/sound/clasic_bg.mp3");
         this.load.audio("eatSn", "src/sound/eat.mp3");
         this.load.audio("collisionSn", "src/sound/collision.mp3");
+
+        this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
         //EVENTS
         if (isEvent.event == "halloween") {
-            this.load.image('skull', 'src/img/skull.png');
-            this.load.image('snakeIconHalloween', 'src/img/iconHalloween.png');
             this.load.audio("bgHalloweenSong", "src/sound/bg_halloween.mp3");
         } else if (isEvent.event == "kpncaBirthday" || isEvent.event == "pro777Birthday" || isEvent.event == "songBirthday") {
-            this.load.image('snakeIconBirthdayKpnca', 'src/img/iconBirthdayKpnca.png');
-            this.load.image('snakeIconBirthday', 'src/img/iconBirthday.png');
             this.load.audio("bgBirthdaySong", "src/sound/bg_birthday.mp3");
         } else if (isEvent.event == "newYear") {
-            this.load.image('snowflakes', 'src/img/snowflakes.png');
-            this.load.image('snakeIconChristmas', 'src/img/iconChristmas.png');
             this.load.audio("bgNewYearSong", "src/sound/bg_new_year.mp3");
-        } else if (isEvent.event == "easter") {
-            this.load.image('flowers', 'src/img/flowers.png');
-            this.load.image('snakeIconEaster', 'src/img/iconEaster.png');
         }
-        this.load.font('Pixelify Sans', 'src/fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf', 'truetype');
     }
 
     async create() {
@@ -68,12 +54,24 @@ export class menu extends Phaser.Scene {
             gameJson.snapshotText = isEvent.snapshotText;
         }
         //ICON
-        const icon = this.add.image(
-            this.cameras.main.width / 2,
-            this.cameras.main.height / 5.5,
-            isEvent.icon
-        ).setOrigin(0.5, 0.5)
-        .setScale(5.5);
+        let icon;
+        if (completeLevels == allLevels) {
+            icon = this.add.image(
+                this.cameras.main.width / 2,
+                this.cameras.main.height / 5.5,
+                'icons',
+                'snakeVictoriousIcon'
+            ).setOrigin(0.5, 0.5)
+            .setScale(5.5);
+        } else {
+            icon = this.add.image(
+                this.cameras.main.width / 2,
+                this.cameras.main.height / 5.5,
+                'icons',
+                isEvent.icon
+            ).setOrigin(0.5, 0.5)
+            .setScale(5.5);
+        }
         icon.alpha = 0;
         this.tweens.add({
             targets: icon,
@@ -206,7 +204,7 @@ export class menu extends Phaser.Scene {
                 if (completeLevels == allLevels) {
                     if (levelText.text != "All levels completed!") {
                         levelText.text = "All levels completed!";
-                        playButton.list[2].setTexture("replayBtn");
+                        playButton.list[2].setTexture("menu_icon", "replayBtn");
                         playButton.list[2].setScale(4);
                     } else if (playButton.list[2]) {
                         new ConfirmWindow(this, "Do you want to reset progress?", 1200, (value) => {

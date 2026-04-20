@@ -3,8 +3,9 @@ export class SnowEmitter {
         this.scene = scene;
         this.emitter = this.scene.add.particles(
             0, 0,
-            "snowflakes",
+            "particles",
             {
+                frame: "snowflakes",
                 x: { min: 0, max: scene.scale.width },
                 y: -10,
                 speedY: { min: 30, max: 80 },

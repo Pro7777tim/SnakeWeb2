@@ -3,8 +3,9 @@ export class Skullfall {
         this.scene = scene;
         this.emitter = this.scene.add.particles(
             0, 0,
-            "skull",
+            "particles",
             {
+                frame: "skull",
                 x: { min: 0, max: scene.scale.width },
                 y: -10,
                 speedY: { min: 40, max: 100 },

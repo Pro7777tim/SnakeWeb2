@@ -3,8 +3,9 @@ export class EasterEmitter {
         this.scene = scene;
         this.emitter = this.scene.add.particles(
             0, 0,
-            "flowers",
+            "particles",
             {
+                frame: "flowers",
                 x: { min: 0, max: scene.scale.width },
                 y: -10,
                 speedY: { min: 30, max: 80 },

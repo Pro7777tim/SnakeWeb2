@@ -1,305 +1,373 @@
 import { DefeatWindow, WinWindow } from "../global/API/endLevel.mjs"
 import { ClassicControl } from "../global/API/mobileControl.mjs";
 export class classic_walls extends Phaser.Scene {
-    constructor() {
-      super({ key: 'level' });
-    }
-
-    init(data) {
-      this.blockSize = 40;
-      this.widthInBlocks = Math.floor(this.scale.gameSize.width / this.blockSize);
-      this.heightInBlocks = Math.floor(this.scale.gameSize.height / this.blockSize);
-      data.initLevel(this, {
-        shTime: true,
-        shScore: true
-      });
-    }
-
-    create() {
-      this.snake = [
-        new Phaser.Geom.Point(7, 5),
-        new Phaser.Geom.Point(6, 5),
-        new Phaser.Geom.Point(5, 5)
-      ];
-      this.direction = 'right';
-      this.nextDirection = 'right';
-
-      this.stones = [];
-
-      this.apple = this.getEmptyRandomBlock();
-
-      this.stones = [
-        this.getEmptyRandomBlock(),
-        this.getEmptyRandomBlock(),
-        this.getEmptyRandomBlock()
-      ];
-
-      this.snakeSprites = [];
-      this.stoneSprites = [];
-      this.appleSprite = null;
-
-      this.moveEvent = this.time.addEvent({
-        delay: 150,
-        callback: this.moveSnake,
-        callbackScope: this,
-        loop: true
-      });
-
-      this.input.keyboard.on('keydown', this.handleKey, this);
-      this.control = new ClassicControl(this, 1770, 990, {
-        up: () => {this.handleKey({code: "ArrowUp"})},
-        down: () => {this.handleKey({code: "ArrowDown"})},
-        left: () => {this.handleKey({code: "ArrowLeft"})},
-        right: () => {this.handleKey({code: "ArrowRight"})}
-      });
-
-      this.eatSn = this.sound.add("eatSn", {
-        volume: 0.3
-      });
-      this.collisionSn = this.sound.add("collisionSn", {
-        volume: 0.3
-      });
-    }
-
-    handleKey(event) {
-      const code = event.code;
-      if ((code === "ArrowLeft" || code === "KeyA") && this.direction !== "right") {
-          this.nextDirection = "left";
-      }
-      else if ((code === "ArrowRight" || code === "KeyD") && this.direction !== "left") {
-          this.nextDirection = "right";
-      }
-      else if ((code === "ArrowUp" || code === "KeyW") && this.direction !== "down") {
-          this.nextDirection = "up";
-      }
-      else if ((code === "ArrowDown" || code === "KeyS") && this.direction !== "up") {
-          this.nextDirection = "down";
-      }
+  constructor() {
+    super({ key: "level" });
   }
 
-    moveSnake() {
-      this.direction = this.nextDirection;
-      const head = this.snake[0];
-      let newHead = new Phaser.Geom.Point(head.x, head.y);
+  init(data) {
+    this.blockSize = 40;
+    this.widthInBlocks = Math.floor(this.scale.gameSize.width / this.blockSize);
+    this.heightInBlocks = Math.floor(
+      this.scale.gameSize.height / this.blockSize,
+    );
+    data.initLevel(this, {
+      shTime: true,
+      shScore: true,
+    });
+  }
 
-      if (this.direction === 'right') newHead.x += 1;
-      else if (this.direction === 'left') newHead.x -= 1;
-      else if (this.direction === 'down') newHead.y += 1;
-      else if (this.direction === 'up') newHead.y -= 1;
+  create() {
+    this.snake = [
+      new Phaser.Geom.Point(7, 5),
+      new Phaser.Geom.Point(6, 5),
+      new Phaser.Geom.Point(5, 5),
+    ];
+    this.prevSnake = this.snake.map((p) => new Phaser.Geom.Point(p.x, p.y));
+    this.offset = this.blockSize * 0.2;
+    this.direction = "right";
+    this.nextDirection = "right";
+    this.occupied = new Set();
 
-      if (this.checkCollision(newHead)) {
-        this.gameOver();
+    this.stones = [];
+
+    this.apple = this.getEmptyRandomBlock();
+
+    this.stones = [
+      this.getEmptyRandomBlock(),
+      this.getEmptyRandomBlock(),
+      this.getEmptyRandomBlock(),
+    ];
+
+    this.snakeSprites = [];
+    this.stoneSprites = [];
+    this.appleSprite = null;
+
+    this.moveEvent = this.time.addEvent({
+      delay: 150,
+      callback: this.moveSnake,
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.input.keyboard.on("keydown", this.handleKey, this);
+    this.control = new ClassicControl(this, 1770, 990, {
+      up: () => {
+        this.handleKey({ code: "ArrowUp" });
+      },
+      down: () => {
+        this.handleKey({ code: "ArrowDown" });
+      },
+      left: () => {
+        this.handleKey({ code: "ArrowLeft" });
+      },
+      right: () => {
+        this.handleKey({ code: "ArrowRight" });
+      },
+    });
+
+    this.eatSn = this.sound.add("eatSn", {
+      volume: 0.3,
+    });
+    this.collisionSn = this.sound.add("collisionSn", {
+      volume: 0.3,
+    });
+  }
+
+  update() {
+    this.redraw();
+  }
+
+  handleKey(event) {
+    const code = event.code;
+    if (
+      (code === "ArrowLeft" || code === "KeyA") &&
+      this.direction !== "right"
+    ) {
+      this.nextDirection = "left";
+    } else if (
+      (code === "ArrowRight" || code === "KeyD") &&
+      this.direction !== "left"
+    ) {
+      this.nextDirection = "right";
+    } else if (
+      (code === "ArrowUp" || code === "KeyW") &&
+      this.direction !== "down"
+    ) {
+      this.nextDirection = "up";
+    } else if (
+      (code === "ArrowDown" || code === "KeyS") &&
+      this.direction !== "up"
+    ) {
+      this.nextDirection = "down";
+    }
+  }
+
+  moveSnake() {
+    let key;
+    for (let i = 0; i < this.snake.length; i++) {
+      key = i === 0 ? "head" : "body";
+      if (!this.prevSnake[i]) {
+        this.prevSnake[i] = { x: this.snake[i].x, y: this.snake[i].y };
+      } else {
+        this.prevSnake[i].x = this.snake[i].x;
+        this.prevSnake[i].y = this.snake[i].y;
+      }
+      if (i == 0) {
+        if (this.snakeSprites[0].scale !== 2.1) {
+          this.snakeSprites[0].setScale(2.1);
+        }
+      } else {
+        if (this.snakeSprites[i].scale !== 1.9) {
+          this.snakeSprites[i].setScale(1.9);
+        }
+      }
+      if (this.snakeSprites[i].texture.key !== key) {
+        this.snakeSprites[i].setTexture("classic", key);
+      }
+    }
+    this.direction = this.nextDirection;
+    const head = this.snake[0];
+    let newHead = { x: head.x, y: head.y };
+
+    if (this.direction === "right") newHead.x += 1;
+    else if (this.direction === "left") newHead.x -= 1;
+    else if (this.direction === "down") newHead.y += 1;
+    else if (this.direction === "up") newHead.y -= 1;
+
+    if (this.checkCollision(newHead)) {
+      this.gameOver();
+      return;
+    }
+
+    this.snake.unshift(newHead);
+
+    this.occupied.clear();
+
+    for (let s of this.snake) {
+      this.occupied.add(s.x + "," + s.y);
+    }
+
+    for (let s of this.stones) {
+      this.occupied.add(s.x + "," + s.y);
+    }
+
+    if (this.apple) {
+      this.occupied.add(this.apple.x + "," + this.apple.y);
+    }
+
+    if (Phaser.Geom.Point.Equals(newHead, this.apple)) {
+      const score = this.registry.get("score") + 1;
+      this.registry.set("score", score);
+      if (settings.sound) {
+        this.eatSn.play();
+      }
+
+      if (score >= 20) {
+        this.moveEvent.remove(false);
+
+        new WinWindow(
+          this,
+          {
+            textWin: "You win!",
+            subText: "The snake is full",
+          },
+          {
+            shTime: true,
+            shScore: true,
+          },
+        );
+
         return;
       }
 
-      this.snake.unshift(newHead);
+      this.apple = this.getEmptyRandomBlock();
+      this.occupied.add(this.apple.x + "," + this.apple.y);
 
-      if (Phaser.Geom.Point.Equals(newHead, this.apple)) {
-        const score = this.registry.get('score') + 1;
-        this.registry.set('score', score);
-        if (settings.sound) { 
-          this.eatSn.play();
-        }
-
-        if (score >= 20) {
-          this.moveEvent.remove(false);
-
-          new WinWindow(this, {
-            textWin: "You win!",
-            subText: "The snake is full"
-          }, {
-            shTime: true,
-            shScore: true
-          });
-
-          return;
-        }
-
-        this.apple = this.getEmptyRandomBlock();
-        this.stones = this.stones.map(() => this.getEmptyRandomBlock());
-      } else {
-        this.snake.pop();
+      for (let i = 0; i < this.stones.length; i++) {
+        this.stones[i] = this.getEmptyRandomBlock();
+        this.occupied.add(this.stones[i].x + "," + this.stones[i].y);
       }
-
-      this.redraw();
+    } else {
+      this.snake.pop();
     }
 
-    checkCollision(point) {
-      if (point.x < 0 || point.y < 0 ||
-          point.x >= this.widthInBlocks ||
-          point.y >= this.heightInBlocks) {
-        return true;
-      }
+    const appleX = this.apple.x * this.blockSize + this.blockSize / 2;
+    const appleY = this.apple.y * this.blockSize + this.blockSize / 2;
 
-      for (let stone of this.stones) {
-        if (Phaser.Geom.Point.Equals(point, stone)) {
-          return true;
-        }
-      }
-
-      for (let i = 0; i < this.snake.length; i++) {
-        if (Phaser.Geom.Point.Equals(point, this.snake[i])) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    getRandomBlock() {
-      const col = Phaser.Math.Between(0, this.widthInBlocks - 1);
-      const row = Phaser.Math.Between(0, this.heightInBlocks - 1);
-      return new Phaser.Geom.Point(col, row);
-    }
-
-    getEmptyRandomBlock() {
-      let p;
-      do {
-        p = this.getRandomBlock();
-      } while (
-        this.snake.some(s => Phaser.Geom.Point.Equals(s, p)) ||
-        this.stones.some(s => Phaser.Geom.Point.Equals(s, p)) ||
-        (this.apple && Phaser.Geom.Point.Equals(this.apple, p))
-      );
-      return p;
-    }
-
-    redraw() {
-      if (!this.snakeSprites) this.snakeSprites = [];
-      if (!this.stoneSprites) this.stoneSprites = [];
-
-      for (let i = 0; i < this.snake.length; i++) {
-        const b = this.snake[i];
-
-        const x = b.x * this.blockSize + this.blockSize / 2;
-        const y = b.y * this.blockSize + this.blockSize / 2;
-        const offset = this.blockSize * 0.2;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        const key = (i === 0) ? 'head' : 'body';
-
-        let sprite = this.snakeSprites[i];
-
-        if (!sprite || !sprite.scene) {
-          sprite = this.add.image(x, y, key)
-            .setOrigin(0.5)
-            .setDepth(3);
-
-          this.snakeSprites[i] = sprite;
-        } else {
-          if (sprite.texture.key !== key) {
-            sprite.setTexture(key);
-          }
-        }
-
-        if (i === 0) {
-          if (this.direction === 'right') {sprite.setAngle(90); offsetX = offset;}
-          else if (this.direction === 'left') {sprite.setAngle(270); offsetX = -offset;}
-          else if (this.direction === 'up') {sprite.setAngle(0); offsetY = -offset;}
-          else if (this.direction === 'down') {sprite.setAngle(180); offsetY = offset;}
-          if (sprite.scale !== 2.1) {
-            sprite.setScale(2.1);
-          }
-        } else {
-          if (sprite.scale !== 1.9) {
-            sprite.setScale(1.9);
-          }
-        }
-
-        this.tweens.add({
-          targets: sprite,
-          x: x + offsetX,
-          y: y + offsetY,
-          duration: this.moveEvent.delay,
-          ease: 'Linear'
-        });
-      }
-
-      for (let i = this.snake.length; i < this.snakeSprites.length; i++) {
-        this.snakeSprites[i]?.destroy();
-        this.snakeSprites[i] = null;
-      }
-      this.snakeSprites.length = this.snake.length;
-
-      const appleX = this.apple.x * this.blockSize + this.blockSize / 2;
-      const appleY = this.apple.y * this.blockSize + this.blockSize / 2;
-
-      if (!this.appleSprite) {
-        this.appleSprite = this.add.image(
-          appleX,
-          appleY,
-          'apple'
-        )
+    if (!this.appleSprite) {
+      this.appleSprite = this.add
+        .image(appleX, appleY, "classic", "apple")
         .setDisplaySize(this.blockSize, this.blockSize)
         .setOrigin(0.5)
         .setScale(3)
         .setDepth(2);
-      } else {
-        if (this.appleSprite.x !== appleX || this.appleSprite.y !== appleY) {
-          this.tweens.killTweensOf(this.appleSprite);
-
+    } else {
+      if (this.appleSprite.x !== appleX || this.appleSprite.y !== appleY) {
+        if (!this.tweens.isTweening(this.appleSprite)) {
           this.tweens.add({
             targets: this.appleSprite,
             x: appleX,
             y: appleY,
             duration: this.moveEvent.delay,
-            ease: 'Linear'
+            ease: "Linear",
           });
         }
       }
+    }
 
-      for (let i = 0; i < this.stones.length; i++) {
-        const stone = this.stones[i];
+    for (let i = 0; i < this.stones.length; i++) {
+      const stone = this.stones[i];
 
-        const x = stone.x * this.blockSize;
-        const y = stone.y * this.blockSize;
+      const x = stone.x * this.blockSize;
+      const y = stone.y * this.blockSize;
 
-        let s = this.stoneSprites[i];
+      let s = this.stoneSprites[i];
 
-        if (!s) {
-          s = this.add.image(
-            x,
-            y,
-            'rock'
-          )
+      if (!s) {
+        s = this.add
+          .image(x, y, "rock")
           .setDisplaySize(this.blockSize, this.blockSize)
           .setOrigin(0.15, 0.15)
           .setScale(3)
           .setDepth(2);
 
-          this.stoneSprites[i] = s;
-        } else {
-          if (s.x !== x || s.y !== y) {
-            this.tweens.killTweensOf(s);
-
+        this.stoneSprites[i] = s;
+      } else {
+        if (s.x !== x || s.y !== y) {
+          if (!this.tweens.isTweening(s)) {
             this.tweens.add({
               targets: s,
               x: x,
               y: y,
               duration: this.moveEvent.delay,
-              ease: 'Linear'
+              ease: "Linear",
             });
           }
         }
       }
     }
+  }
 
-    gameOver() {
-      if (settings.sound) { 
-          this.collisionSn.play();
+  checkCollision(point) {
+    if (
+      point.x < 0 ||
+      point.y < 0 ||
+      point.x >= this.widthInBlocks ||
+      point.y >= this.heightInBlocks
+    ) {
+      return true;
+    }
+
+    for (let stone of this.stones) {
+      if (Phaser.Geom.Point.Equals(point, stone)) {
+        return true;
+      }
+    }
+
+    for (let i = 0; i < this.snake.length; i++) {
+      if (Phaser.Geom.Point.Equals(point, this.snake[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  getRandomBlock() {
+    const col = Phaser.Math.Between(0, this.widthInBlocks - 1);
+    const row = Phaser.Math.Between(0, this.heightInBlocks - 1);
+    return new Phaser.Geom.Point(col, row);
+  }
+
+  getEmptyRandomBlock() {
+    let p;
+
+    do {
+      p = this.getRandomBlock();
+    } while (this.occupied.has(p.x + "," + p.y));
+
+    return p;
+  }
+
+  redraw() {
+    if (!this.snakeSprites) this.snakeSprites = [];
+    if (!this.stoneSprites) this.stoneSprites = [];
+
+    const t = Phaser.Math.Clamp(this.moveEvent.getProgress(), 0, 1);
+    const half = this.blockSize / 2;
+
+    for (let i = 0; i < this.snake.length; i++) {
+      let offsetX = 0;
+      let offsetY = 0;
+
+      let sprite = this.snakeSprites[i];
+
+      const key = i === 0 ? "head" : "body";
+
+      if (!sprite) {
+        sprite = this.add.image(0, 0, 'classic', key).setOrigin(0.5).setDepth(3);
+
+        this.snakeSprites[i] = sprite;
+      } else {
+        sprite.setVisible(true);
       }
 
-      this.moveEvent.remove(false);
+      if (i === 0) {
+        if (this.direction === "right") {
+          sprite.setAngle(90);
+          offsetX = this.offset;
+        } else if (this.direction === "left") {
+          sprite.setAngle(270);
+          offsetX = -this.offset;
+        } else if (this.direction === "up") {
+          sprite.setAngle(0);
+          offsetY = -this.offset;
+        } else if (this.direction === "down") {
+          sprite.setAngle(180);
+          offsetY = this.offset;
+        }
+      }
 
-      new DefeatWindow(this, {
-        textDefeat: "You lost!",
-        subText: "The snake crashed"
-      }, {
-        shTime: true,
-        shScore: true
-      });
+      const prev = this.prevSnake[i] ?? this.snake[i];
+      const curr = this.snake[i];
 
-      return;
+      const prevX = prev.x * this.blockSize + half;
+      const prevY = prev.y * this.blockSize + half;
+
+      const currX = curr.x * this.blockSize + half;
+      const currY = curr.y * this.blockSize + half;
+
+      sprite.x = Phaser.Math.Linear(prevX, currX, t) + offsetX;
+      sprite.y = Phaser.Math.Linear(prevY, currY, t) + offsetY;
     }
+
+    for (let i = this.snake.length; i < this.snakeSprites.length; i++) {
+      this.snakeSprites[i]?.setVisible(false);
+      this.snakeSprites[i] = null;
+    }
+    this.snakeSprites.length = this.snake.length;
+  }
+
+  gameOver() {
+    if (settings.sound) {
+      this.collisionSn.play();
+    }
+
+    this.moveEvent.remove(false);
+
+    new DefeatWindow(
+      this,
+      {
+        textDefeat: "You lost!",
+        subText: "The snake crashed",
+      },
+      {
+        shTime: true,
+        shScore: true,
+      },
+    );
+
+    return;
+  }
 }

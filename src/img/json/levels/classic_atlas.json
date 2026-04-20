@@ -1,0 +1,47 @@
+{
+    "frames": [
+        {
+            "filename": "head",
+            "frame": {
+                "w": 19,
+                "h": 25,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "apple",
+            "frame": {
+                "w": 19,
+                "h": 19,
+                "x": 19,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "body",
+            "frame": {
+                "w": 19,
+                "h": 19,
+                "x": 19,
+                "y": 19
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

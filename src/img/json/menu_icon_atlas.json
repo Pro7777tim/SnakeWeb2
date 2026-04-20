@@ -1,0 +1,99 @@
+{
+    "frames": [
+        {
+            "filename": "arrow",
+            "frame": {
+                "w": 72,
+                "h": 72,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "replayBtn",
+            "frame": {
+                "w": 35,
+                "h": 35,
+                "x": 72,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "settingsBtn",
+            "frame": {
+                "w": 26,
+                "h": 26,
+                "x": 72,
+                "y": 35
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "exitBtn",
+            "frame": {
+                "w": 25,
+                "h": 25,
+                "x": 0,
+                "y": 72
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "playBtn",
+            "frame": {
+                "w": 25,
+                "h": 25,
+                "x": 25,
+                "y": 72
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "checkMarkBtn",
+            "frame": {
+                "w": 18,
+                "h": 15,
+                "x": 50,
+                "y": 72
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "crossBtn",
+            "frame": {
+                "w": 14,
+                "h": 14,
+                "x": 68,
+                "y": 72
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

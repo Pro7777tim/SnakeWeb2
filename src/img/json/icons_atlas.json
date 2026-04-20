@@ -1,0 +1,99 @@
+{
+    "frames": [
+        {
+            "filename": "snakeIconBirthday",
+            "frame": {
+                "w": 52,
+                "h": 68,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeIconBirthdayKpnca",
+            "frame": {
+                "w": 52,
+                "h": 61,
+                "x": 52,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeVictoriousIcon",
+            "frame": {
+                "w": 56,
+                "h": 56,
+                "x": 0,
+                "y": 68
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeIconChristmas",
+            "frame": {
+                "w": 52,
+                "h": 54,
+                "x": 104,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeIcon",
+            "frame": {
+                "w": 52,
+                "h": 52,
+                "x": 104,
+                "y": 54
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeIconEaster",
+            "frame": {
+                "w": 52,
+                "h": 52,
+                "x": 0,
+                "y": 124
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snakeIconHalloween",
+            "frame": {
+                "w": 52,
+                "h": 52,
+                "x": 52,
+                "y": 124
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

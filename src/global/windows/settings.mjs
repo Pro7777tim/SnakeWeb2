@@ -31,6 +31,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
         const crossBtn = scene.add.image(
             840,
             -440,
+            "menu_icon",
             "crossBtn"
         ).setOrigin(0.5, 0.5)
         .setScale(6)
@@ -86,6 +87,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -112,6 +114,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -138,6 +141,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -164,6 +168,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -190,6 +195,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -216,6 +222,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 borderColor: 0xb4e051,
                 borderWidth: 8,
                 iconKey: 'apple',
+                atlas: 'classic',
                 iconScale: 2.5,
                 spacing: 80,
                 textStyle: {
@@ -241,6 +248,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                 backgroundColor: 0xffe561,
                 borderColor: 0xb4e051,
                 borderWidth: 8,
+                atlas: 'classic',
                 iconKey: 'apple',
                 iconScale: 2.5,
                 spacing: 80,
@@ -268,6 +276,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
             {
                 headKey: 'head',
                 bodyKey: 'body',
+                atlas: "classic",
                 spacing: 52,
                 scale: 4
             },
@@ -301,6 +310,7 @@ export class SettingsWindow extends Phaser.GameObjects.Container {
                     backgroundColor: 0xffe561,
                     borderColor: 0xb4e051,
                     borderWidth: 8,
+                    atlas: 'classic',
                     iconKey: 'apple',
                     iconScale: 2.5,
                     spacing: 80,
