@@ -8,28 +8,28 @@ export class BackgroundScene extends Phaser.Scene {
         this.registry.set('time', 0);
         this.shTime = data.shTime ?? true;
         this.shScore = data.shScore ?? true;
+        this.nextY = data.nextY ?? 0;
     }
 
     create() {
         //TIME TEXT
         let timeTextObj, scoreTextObj;
-        let nextY = 0;
         if (this.shTime && settings.showTimeAndScore) {
-            timeTextObj = this.add.text(0, nextY, "Time: " + this.registry.get('time') + "sec", {
+            timeTextObj = this.add.text(0, this.nextY, "Time: " + this.registry.get('time') + "sec", {
                 fontFamily: 'Pixelify Sans',
                 fontSize: '42px',
-                color: '#fff',
+                color: '#b4e051',
                 stroke: '#000',
                 strokeThickness: 4
             }).setOrigin(0);
-            nextY += 35;
+            this.nextY += 35;
         }
         //SCORE TEXT
         if (this.shScore && settings.showTimeAndScore) {
-            scoreTextObj = this.add.text(0, nextY, "Score: " + this.registry.get('score'), {
+            scoreTextObj = this.add.text(0, this.nextY, "Score: " + this.registry.get('score'), {
                 fontFamily: 'Pixelify Sans',
                 fontSize: '42px',
-                color: '#fff',
+                color: '#ffe561',
                 stroke: '#000',
                 strokeThickness: 4
             }).setOrigin(0);

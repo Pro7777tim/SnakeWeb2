@@ -6,7 +6,8 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
         super(scene);
         const { 
             textDefeat = "You lost!",
-            subText = "The snake crashed"
+            subText = "The snake crashed",
+            width = 800
         } = config;
         const { 
             shTime = true,
@@ -19,7 +20,7 @@ export class DefeatWindow extends Phaser.GameObjects.Container {
             scene.cameras.main.width / 2,
             scene.cameras.main.height / 2,
             {
-                width: 800,
+                width: width,
                 height: 600,
                 backgroundColor: 0xffe561,
                 lineStyle: {

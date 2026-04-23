@@ -24,7 +24,6 @@ export class menu extends Phaser.Scene {
         this.load.atlas('menu_icon', 'src/img/menu_icon_atlas.png', 'src/img/json/menu_icon_atlas.json');
 
         this.load.atlas('classic', 'src/img/levels/classic_atlas.png', 'src/img/json/levels/classic_atlas.json');
-        this.load.image('rock', 'src/img/levels/rock.png');
 
         this.load.audio("clasicBg", "src/sound/clasic_bg.mp3");
         this.load.audio("eatSn", "src/sound/eat.mp3");

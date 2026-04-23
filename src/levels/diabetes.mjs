@@ -1,6 +1,6 @@
 import { DefeatWindow, WinWindow } from "../global/API/endLevel.mjs"
 import { ClassicControl } from "../global/API/mobileControl.mjs";
-export class classic_walls extends Phaser.Scene {
+export class diabetes extends Phaser.Scene {
   constructor() {
     super({ key: "level" });
   }
@@ -11,14 +11,16 @@ export class classic_walls extends Phaser.Scene {
     this.heightInBlocks = Math.floor(
       this.scale.gameSize.height / this.blockSize,
     );
+    this.diabetesLevel = 0;
     data.initLevel(this, {
       shTime: true,
       shScore: true,
+      nextY: 35
     });
   }
 
   preload() {
-    this.load.image('rock', 'src/img/levels/rock.png');
+    this.load.image('candy', 'src/img/levels/candy.png');
   }
 
   create() {
@@ -33,19 +35,12 @@ export class classic_walls extends Phaser.Scene {
     this.nextDirection = "right";
     this.occupied = new Set();
 
-    this.stones = [];
-
     this.apple = this.getEmptyRandomBlock();
-
-    this.stones = [
-      this.getEmptyRandomBlock(),
-      this.getEmptyRandomBlock(),
-      this.getEmptyRandomBlock(),
-    ];
+    this.candy = this.getEmptyRandomBlock();
 
     this.snakeSprites = [];
-    this.stoneSprites = [];
     this.appleSprite = null;
+    this.candySprite = null;
 
     this.moveEvent = this.time.addEvent({
       delay: 150,
@@ -53,6 +48,21 @@ export class classic_walls extends Phaser.Scene {
       callbackScope: this,
       loop: true,
     });
+
+    this.add.text(0, 0, "Diabetes level:", {
+      fontFamily: 'Pixelify Sans',
+      fontSize: '42px',
+      color: '#fff',
+      stroke: '#000',
+      strokeThickness: 4
+    }).setOrigin(0);
+    this.diabetesLevelObj = this.add.text(305, 0, "0%", {
+      fontFamily: 'Pixelify Sans',
+      fontSize: '42px',
+      color: '#b4e051',
+      stroke: '#000',
+      strokeThickness: 4
+    }).setOrigin(0);
 
     this.input.keyboard.on("keydown", this.handleKey, this);
     this.control = new ClassicControl(this, 1770, 990, {
@@ -152,12 +162,12 @@ export class classic_walls extends Phaser.Scene {
       this.occupied.add(s.x + "," + s.y);
     }
 
-    for (let s of this.stones) {
-      this.occupied.add(s.x + "," + s.y);
-    }
-
     if (this.apple) {
       this.occupied.add(this.apple.x + "," + this.apple.y);
+    }
+
+    if (this.candy) {
+      this.occupied.add(this.candy.x + "," + this.candy.y);
     }
 
     if (Phaser.Geom.Point.Equals(newHead, this.apple)) {
@@ -167,7 +177,7 @@ export class classic_walls extends Phaser.Scene {
         this.eatSn.play();
       }
 
-      if (score >= 20) {
+      if (score >= 50) {
         this.moveEvent.remove(false);
 
         new WinWindow(
@@ -187,17 +197,65 @@ export class classic_walls extends Phaser.Scene {
 
       this.apple = this.getEmptyRandomBlock();
       this.occupied.add(this.apple.x + "," + this.apple.y);
-
-      for (let i = 0; i < this.stones.length; i++) {
-        this.stones[i] = this.getEmptyRandomBlock();
-        this.occupied.add(this.stones[i].x + "," + this.stones[i].y);
+    } else if (Phaser.Geom.Point.Equals(newHead, this.candy)) {
+      const score = this.registry.get("score") + 5;
+      this.registry.set("score", score);
+      this.diabetesLevel = this.diabetesLevel + Math.floor(Math.random() * 25) + 1;
+      this.diabetesLevelObj.setText(this.diabetesLevel + "%");
+      if (this.diabetesLevel < 30) {
+        this.diabetesLevelObj.setColor("#b4e051");
+      } else if (this.diabetesLevel < 70) {
+        this.diabetesLevelObj.setColor("#ffe561");
+      } else if (this.diabetesLevel < 100) {
+        this.diabetesLevelObj.setColor("#dd4141");
+      } else if (this.diabetesLevel >= 100) {
+        this.moveEvent.remove(false);
+        new DefeatWindow(
+          this,
+          {
+            textDefeat: "You lost!",
+            subText: "The snake died of diabetes",
+            width: 950
+          },
+          {
+            shTime: true,
+            shScore: true,
+          },
+        );
       }
+
+      if (settings.sound) {
+        this.eatSn.play();
+      }
+
+      if (score >= 50 && this.diabetesLevel < 100) {
+        this.moveEvent.remove(false);
+
+        new WinWindow(
+          this,
+          {
+            textWin: "You win!",
+            subText: "The snake is full",
+          },
+          {
+            shTime: true,
+            shScore: true,
+          },
+        );
+
+        return;
+      }
+
+      this.candy = this.getEmptyRandomBlock();
+      this.occupied.add(this.candy.x + "," + this.candy.y);
     } else {
       this.snake.pop();
     }
 
     const appleX = this.apple.x * this.blockSize + this.blockSize / 2;
     const appleY = this.apple.y * this.blockSize + this.blockSize / 2;
+    const candyX = this.candy.x * this.blockSize + this.blockSize / 2;
+    const candyY = this.candy.y * this.blockSize + this.blockSize / 2;
 
     if (!this.appleSprite) {
       this.appleSprite = this.add
@@ -220,34 +278,23 @@ export class classic_walls extends Phaser.Scene {
       }
     }
 
-    for (let i = 0; i < this.stones.length; i++) {
-      const stone = this.stones[i];
-
-      const x = stone.x * this.blockSize;
-      const y = stone.y * this.blockSize;
-
-      let s = this.stoneSprites[i];
-
-      if (!s) {
-        s = this.add
-          .image(x, y, "rock")
-          .setDisplaySize(this.blockSize, this.blockSize)
-          .setOrigin(0.15, 0.15)
-          .setScale(3)
-          .setDepth(2);
-
-        this.stoneSprites[i] = s;
-      } else {
-        if (s.x !== x || s.y !== y) {
-          if (!this.tweens.isTweening(s)) {
-            this.tweens.add({
-              targets: s,
-              x: x,
-              y: y,
-              duration: this.moveEvent.delay,
-              ease: "Linear",
-            });
-          }
+    if (!this.candySprite) {
+      this.candySprite = this.add
+        .image(candyX, candyY, "candy")
+        .setDisplaySize(this.blockSize, this.blockSize)
+        .setOrigin(0.5)
+        .setScale(3)
+        .setDepth(2);
+    } else {
+      if (this.candySprite.x !== candyX || this.candySprite.y !== candyY) {
+        if (!this.tweens.isTweening(this.candySprite)) {
+          this.tweens.add({
+            targets: this.candySprite,
+            x: candyX,
+            y: candyY,
+            duration: this.moveEvent.delay,
+            ease: "Linear",
+          });
         }
       }
     }
@@ -261,12 +308,6 @@ export class classic_walls extends Phaser.Scene {
       point.y >= this.heightInBlocks
     ) {
       return true;
-    }
-
-    for (let stone of this.stones) {
-      if (Phaser.Geom.Point.Equals(point, stone)) {
-        return true;
-      }
     }
 
     for (let i = 0; i < this.snake.length; i++) {
@@ -296,7 +337,6 @@ export class classic_walls extends Phaser.Scene {
 
   redraw() {
     if (!this.snakeSprites) this.snakeSprites = [];
-    if (!this.stoneSprites) this.stoneSprites = [];
 
     const t = Phaser.Math.Clamp(this.moveEvent.getProgress(), 0, 1);
     const half = this.blockSize / 2;

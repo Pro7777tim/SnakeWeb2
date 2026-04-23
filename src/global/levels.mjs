@@ -1,6 +1,7 @@
 //IMPORTS
 import { classic } from "../levels/classic.mjs";
 import { classic_walls } from "../levels/classic_walls.mjs";
+import { diabetes } from "../levels/diabetes.mjs";
 
 //FUNCTIONS
 function randLevel() {
@@ -62,6 +63,15 @@ window.gImage = {
         mod: "Three walls added",
         target: "Eat 20 apples",
         complete: getComplate(lImage, "classic_walls")
+    },
+    diabetes: {
+        scene: diabetes,
+        key: "diabetes",
+        name: "Diabetes mellitus",
+        complexity: "Middle",
+        mod: "Added candy and diabetes",
+        target: "Get 50 score",
+        complete: getComplate(lImage, "diabetes")
     }
 };
 
